@@ -19,10 +19,10 @@ class CompanyInterns(models.TransientModel):
     hr_ids = fields.Many2many('hr.data', 'intern_hr_rel', 'intern_id', 'hr_id', string="HRs")
 
 
-
-    def confirm(self):
+    @staticmethod
+    def confirm():
         return {'type': 'ir.actions.act_window_close'}
 
     @staticmethod
-    def cancel(self):
+    def cancel():
         return {'type': 'ir.actions.act_window_close'}
