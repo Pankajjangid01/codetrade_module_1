@@ -18,4 +18,4 @@ class StudentRegisterMessage(models.TransientModel):
 
     @staticmethod    
     def cancel():
-        return 
+        return {'type': 'ir.actions.act_window_close'}
