@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="student_4" model="student.student">
+            <field name="name">Shashank</field>
+            <field name="age">23</field>
+            <field name="email">shashank1111111@gmail.com</field>
+            <field name="student_id">004</field>
+            <field name="college_name">SKIET</field>
+            <field name="branch">cse</field>
+        </record>
+
+        <record id="student_5" model="student.student">
+            <field name="name">Dinesh</field>
+            <field name="age">25</field>
+            <field name="email">Dinesh@gmail.com</field>
+            <field name="student_id">005</field>
+            <field name="college_name">SKIET</field>
+            <field name="branch">ece</field>
+        </record>
+
+        <record id="student_6" model="student.student">
+            <field name="name">Dheeraj</field>
+            <field name="age">26</field>
+            <field name="email">dheeraj23@gmail.com</field>
+            <field name="student_id">006</field>
+            <field name="college_name">SKIET</field>
+            <field name="branch">mech</field> 
+        </record>
+
+       <function model="student.student" name="create_record">
+           <value>Naman</value>
+           <value>15</value>
+           <value>naman@gmail.com</value>
+           <value>007</value>
+           <value>Poornima</value>
+           <value>it</value>
+       </function>
+
+        <function model="student.student" name="write_record">
+            <value>238</value>
+            <value>naman@gmail.com</value>
+            <value>ACERC</value>
+       </function>
+
+       <function model="student.student" name="delete_record">
+            <value>48</value>
+       </function>
+
+    </data>
+</odoo>

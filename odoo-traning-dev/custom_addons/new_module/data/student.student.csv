@@ -1,0 +1,4 @@
+"id","name","age","email","branch","college_name","student_id"
+student_1,Yashu,24,yashu@gmail.com,Computer Science,"ACERC",001
+student_2,Saadu,23,saadu@gmail.com,Computer Science,"AIET",002
+student_3,Aditya,22,adi@gmail.com,Computer Science,"JECRC",003
