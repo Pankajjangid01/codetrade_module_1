@@ -17,6 +17,7 @@ class CompanyOffice(models.TransientModel):
                 'hr_office': self.company_office
             })
             return {'type': 'ir.actions.act_window_close'}
-        
+
+    @staticmethod    
     def cancel(self):
         return {'type': 'ir.actions.act_window_close'}

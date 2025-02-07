@@ -23,5 +23,6 @@ class CompanyInterns(models.TransientModel):
     def confirm(self):
         return {'type': 'ir.actions.act_window_close'}
 
+    @staticmethod
     def cancel(self):
         return {'type': 'ir.actions.act_window_close'}
