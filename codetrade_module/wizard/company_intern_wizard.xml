@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="register_intern_form" model="ir.ui.view">
+        <field name="name">register.intern.form</field>
+        <field name="model">intern.register</field>
+        <field name="arch" type="xml">
+            <form string="Add new Interns">
+                <group>
+                    <group>
+                        <field name="select_employee_id" required="True"/>
+                        <field name="intern_name"/>
+                        <field name="intern_email"/>
+                    </group>
+                    <group>
+                        <field name="intern_id"/>
+                        <field name="intern_tech_stack"/>
+                        <field name="select_hr_id"/>
+                        <field name="hr_ids" widget="many2many_tags"/> 
+                    </group>
+                </group>
+                <footer>
+                    <button name="confirm" string="Add" type="object" class="oe_highlight"/>
+                    <button name="cancel" string="Cancel" type="object" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
+

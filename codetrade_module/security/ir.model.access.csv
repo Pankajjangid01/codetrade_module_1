@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_hr,access_company_hr,model_company_hr,company_admin_access,1,1,1,1
+access_company_hr_data,access_company_hr_data,model_company_hr,company_hr_access,1,1,1,1
+access_college_employee,access_college_college,model_company_employee,company_employee_access,1,1,1,1
+access_company_office,access_company_office,model_office_register,company_admin_access,1,1,1,1
+access_company_intern,access_company_intern,model_intern_register,company_admin_access,1,1,1,1
