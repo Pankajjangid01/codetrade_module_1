@@ -46,9 +46,9 @@ class StudentDetails(models.Model):
         searched_record = self.search([('id', '=', id)])
         if searched_record:
             searched_record.write(dict(email=email,college_name=college_name))
-            _logger.info("Searched Record Information",searched_record)
+            _logger.info("Searched Record Information %s",searched_record)
         else:
-            _logger.error("No record found with given id",searched_record)
+            _logger.error("No record found with given id %s",searched_record)
 
     @api.model
     def delete_record(self,id):

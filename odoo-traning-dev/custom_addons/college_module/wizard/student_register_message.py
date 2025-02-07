@@ -1,4 +1,4 @@
-from odoo import models,fields,_
+from odoo import models,fields
 
 class StudentRegisterMessage(models.TransientModel):
     _name = "student.register"

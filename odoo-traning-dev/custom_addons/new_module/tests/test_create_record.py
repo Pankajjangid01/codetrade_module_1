@@ -24,8 +24,6 @@ class TestCreateRecord(TransactionCase):
         )
 
     def test_create_record(self):
-        import pdb;
-        pdb.set_trace()
         self.assertEqual(self.student_details.name, 'Anuj')
 
     def test_create_record_2(self):
