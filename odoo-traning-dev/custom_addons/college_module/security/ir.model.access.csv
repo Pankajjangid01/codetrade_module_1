@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_college_data,access_college_data,model_college_student,college_admin_access,1,1,1,1
-access_teacher_teacher,access_teacher_teacher,model_college_teacher,college_teacher_access,1,1,1,1
-access_college_college,access_college_college,model_college_student,college_student_access,1,0,0,0
-access_student_register,access_student_register,model_student_register,college_admin_access,1,1,1,1
