@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="school_module_management">
+             <field name="name">School Management Rights</field>
+             <field name="description">Security Rules for School Management</field>
+             <field name="sequence">10</field>
+
+        </record>
+        
+        <record id="school_user_access" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="school_module_management"/>
+        </record>
+
+        <record id="school_manager_access" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="school_module_management"/>
+        </record>
+
+    </data>
+</odoo>

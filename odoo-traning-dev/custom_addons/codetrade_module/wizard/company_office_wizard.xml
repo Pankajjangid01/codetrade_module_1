@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="register_hr_form" model="ir.ui.view">
+        <field name="name">register.hr.form</field>
+        <field name="model">office.register</field>
+        <field name="arch" type="xml">
+            <form string="HR office assignment">
+                <group>
+                    <field name="select_hr_id"/>
+                    <field name="company_office"/>
+                </group>
+                <footer>
+                    <button name="confirm" string="Confirm" type="object" class="oe_highlight"/>
+                    <button name="cancel" string="Cancel" type="object" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
+

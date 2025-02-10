@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="register_student_form" model="ir.ui.view">
+        <field name="name">register.student.form</field>
+        <field name="model">student.register</field>
+        <field name="arch" type="xml">
+            <form string="Student Registration Confirm">
+                <group>
+                    <field name="select_class_teacher_id"/>
+                    <field name="message" placeholder="write a message to teacher..."/>
+                </group>
+                <footer>
+                    <button name="confirm" string="Confirm" type="object" class="oe_highlight"/>
+                    <button name="cancel" string="Cancel" type="object" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+     <record id="register_student_list" model="ir.ui.view">
+        <field name="name">register.student.form</field>
+        <field name="model">student.register</field>
+        <field name="arch" type="xml">
+            <list string="Student Registration Confirm">
+                <field name="select_class_teacher_id"/>
+                <field name="message"/>
+            </list>
+        </field>
+    </record>
+</odoo>
+

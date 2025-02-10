@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="college_module_management">
+             <field name="name">College Management Rights</field>
+             <field name="description">Security Rules for College Management</field>
+             <field name="sequence">10</field>
+        </record>
+        
+        <!-- Student Group -->
+        <record id="college_student_access" model="res.groups">
+            <field name="name">Student</field>
+            <field name="category_id" ref="college_module_management"/>
+        </record>
+
+        <!-- Teacher Group -->
+        <record id="college_teacher_access" model="res.groups">
+            <field name="name">Teacher</field>
+            <field name="category_id" ref="college_module_management"/>
+        </record>
+
+        <!-- Admin Group -->
+        <record id="college_admin_access" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="college_module_management"/>
+        </record>
+    </data>
+</odoo>

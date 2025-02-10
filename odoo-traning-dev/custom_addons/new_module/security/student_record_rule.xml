@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="custom_user_record_rule" model="ir.rule">
+       <field name="name">User Management Rule</field>
+       <field ref="model_student_student" name="model_id"/>
+       <field name="domain_force">[]</field>
+       <field name="groups" eval="[(4, ref('access_student_details.school_user_access'))]"/>
+       <field name="perm_read" eval="True"/>
+       <field name="perm_write" eval="False"/>
+       <field name="perm_create" eval="False"/>
+       <field name="perm_unlink" eval="False"/>
+    </record>
+
+   <record id = "custom_admin_record_rule" model = "ir.rule">
+       <field name = "name">Admin Management Rule</field>
+       <field ref = "model_student_student" name = "model_id"/>
+       <field name = "domain_force">[('1', '=',1)]</field>
+       <field name = "groups" eval="[(4, ref('access_student_student.school_manager_access'))]"/>
+       <field name = "perm_read" eval = "True"/>
+       <field name = "perm_write" eval = "True"/>
+       <field name = "perm_create" eval = "True"/>
+       <field name = "perm_unlink" eval = "True"/>
+    </record>
+</odoo>
