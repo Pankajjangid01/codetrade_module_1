@@ -16,7 +16,7 @@ class StudentRegisterMessage(models.TransientModel):
                 'teacher_message': self.message
             })
             return {'type': 'ir.actions.act_window_close'}
-        
-    def cancel(self):
+    @staticmethod    
+    def cancel():
         """function to close the wizard after cancel button click"""
         return {'type': 'ir.actions.act_window_close'}
