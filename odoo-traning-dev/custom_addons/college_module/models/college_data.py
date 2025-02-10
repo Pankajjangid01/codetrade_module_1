@@ -63,7 +63,7 @@ class CollegeData(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_if_not_done(self):
         """This function dont allow to delete if student is active"""
-        if any(record.isactive == True for record in self):
+        if any(record.isactive is True for record in self):
             raise UserError(("Student is active, can't delete"))
         
     def action_open_wizard(self):
