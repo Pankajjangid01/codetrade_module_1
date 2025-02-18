@@ -25,22 +25,9 @@ class CompanyInterns(models.TransientModel):
     def confirm(self):
         """Confirm and close wizard"""
         return {'type': 'ir.actions.act_window_close'}
+        notification = {
 
-    @api.model
-    def create(self, vals):
-        """Function to add user name, date, and send email notification"""
-        vals['created_by'] = self.env.user.name
-        vals['created_at'] = datetime.today()
-
-        record = super(CompanyInterns, self).create(vals)
-        return record
     
-    @api.model
-    def send_intern_registration_email(self):
-        record = super(CompanyInterns,self).search([])
-        template = self.env.ref('codetrade_module.email_template_intern_registration')
-        if template:
-            template.send_mail(record.id,force_send = True)
 
 
     @api.model
