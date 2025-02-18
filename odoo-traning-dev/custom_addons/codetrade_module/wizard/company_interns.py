@@ -22,19 +22,44 @@ class CompanyInterns(models.TransientModel):
     created_by = fields.Char(string="Created By")
     created_at = fields.Date(string="Created At")
 
+    _sql_constraints = [
+        ('unique_email', 'UNIQUE(intern_email)', 'The email must be unique for each Intern!'),
+    ]
+
     def confirm(self):
         """Confirm and close wizard"""
         return {'type': 'ir.actions.act_window_close'}
-        notification = {
 
+    @api.model
+    def create(self, vals):
+        """Function to add user name, date, and send email notification"""
+        vals['created_by'] = self.env.user.name
+        vals['created_at'] = datetime.today()
+
+        record = super(CompanyInterns, self).create(vals)
+        template = self.env.ref('codetrade_module.email_template_intern_registration')
+        if template:
+            mail_send = template.send_mail(record.id,force_send = True)
+        if mail_send:
+            record.display_notification()
+        return record
     
-
+    def display_notification(self):
+        notification = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': ("Registered Successfully"),
+                'type': 'success',
+                'message': ("Registration email sent successfully"),
+                'sticky': True,
+            }
+        }
+        return notification
 
     @api.model
     def send_intern_reminders(self):
         """Scheduled cron job to remind HR about interns"""
-        import pdb;
-        pdb.set_trace()
         today = datetime.today().date()
         interns = self.search([('created_at', '<=', today)])
 
@@ -43,7 +68,7 @@ class CompanyInterns(models.TransientModel):
             for intern in interns:
                 if intern.select_hr_id:
                     template.send_mail(intern.id, force_send=True)
-
+        
     @staticmethod    
     def cancel():
         """This function close the wizard window"""

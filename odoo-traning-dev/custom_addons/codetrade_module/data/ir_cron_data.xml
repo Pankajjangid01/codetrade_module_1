@@ -25,18 +25,7 @@
         <field name="model_id" ref="codetrade_module.model_intern_register"/>
         <field name="state">code</field>
         <field name="code">model.send_intern_reminders()</field>
-        <field name="interval_number">2</field>
-        <field name="interval_type">days</field>
-        <field name="active" eval="True"/>
-    </record>
-  
-    <record id="ir_cron_intern_registraion" model="ir.cron">
-        <field name="name">Send Intern Registration Emails</field>
-        <field name="model_id" ref="codetrade_module.model_intern_register"/>
-        <field name="state">code</field>
-        <field name="code">model.send_intern_registration_email()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
-        <field name="active" eval="True"/>
     </record>
 </odoo>
