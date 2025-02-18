@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <menuitem id="company_menuitems_root" name="Company" sequence="10" groups="company_employee_access,company_hr_access,company_admin_access"/>
+    <menuitem id="company_menuitems_root" name="Company" sequence="10" groups="company_employee_access,company_hr_access,company_admin_access,company_intern_access"/>
 
     <menuitem id="company_menu_employee" name="Employee" parent="company_menuitems_root" sequence="20" groups="company_admin_access,company_employee_access,company_hr_access"/>
     <menuitem id="company_menu_employee_details" name="Employee Details" parent="company_menu_employee" action="employee_data_actions"/>
@@ -8,6 +8,9 @@
     <menuitem id="company_menu_hr" name="HR" parent="company_menuitems_root" sequence="30" groups="company_admin_access,company_hr_access"/>
     <menuitem id="company_menu_hr_details" name="Hr Details" parent="company_menu_hr" action="hr_data_actions"/>
 
-    <menuitem id="company_menu_configuration" name="Configuration" parent="company_menuitems_root" sequence="40" groups="company_admin_access"/>
+    <menuitem id="company_menu_intern" name="Interns" parent="company_menuitems_root" sequence="40" groups="company_admin_access,company_employee_access,company_hr_access,company_intern_access"/>
+    <menuitem id="company_menu_intern_details" name="Intern Details" parent="company_menu_intern" action="intern_data_actions"/>
+
+    <menuitem id="company_menu_configuration" name="Configuration" parent="company_menuitems_root" sequence="50" groups="company_admin_access"/>
     <menuitem id="company_menu_configuration_setting" name="Setting" parent="company_menu_configuration" action="hr_data_actions"/>
 </odoo>

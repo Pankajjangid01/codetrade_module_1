@@ -3,7 +3,6 @@ from odoo.exceptions import ValidationError
 from datetime import datetime
 import re
 
-
 class HRData(models.Model):
     _name = "company.hr"
     _description = "Store the Data of the HRs of the company"
@@ -25,8 +24,6 @@ class HRData(models.Model):
     hr_office = fields.Char(string="Assigned Office")
     intern_ids_m2m = fields.Many2many('intern.register', 'intern_hr_rel', 'hr_id', 'intern_id', string="Interns")
 
-
-
     intern_ids = fields.One2many('intern.register', 'select_hr_id', string="Interns Under HR")
 
     _sql_constraints = [
@@ -37,6 +34,8 @@ class HRData(models.Model):
     def _check_validations(self):
         """Function to validate the Contact number"""
         for record in self:
+            if record.email and not re.match(r"[^@]+@[^@]+\.[^@]+", record.email):
+                raise ValidationError("Invalid email format. Please enter a valid email address.")
             if record.contact:
                 if not re.match(r"^(0|\+91|91)?[6-9][0-9]{9}$", record.contact):
                     raise ValidationError("Contact number must start with [6,7,8,9] and must be exactly 10 numeric digits.")
@@ -84,3 +83,22 @@ class HRData(models.Model):
         hrs = self.search([])
         filtered_hrs = hrs.filtered(lambda hr: len(hr.intern_ids_m2m) > 2)
         return filtered_hrs
+    
+    def action_copy_name_to_address(self):
+        """function to create the server action that copy the name to the address field"""
+        for record in self:
+            if record.name and not record.address:
+                record.write({'address': record.name})
+
+    def update_salary(self):
+        """function to update the salary after scheduled time"""
+        scheduler_demo_records = self.env['company.hr'].search([])
+        for demo_record in scheduler_demo_records:
+            salary = demo_record.salary + 5
+            demo_record.write({'salary': salary})
+
+    def delete_record(self):
+        """function to delete the record"""
+        uid = input("Enter the record ID to delete")
+        searched_records = self.env['company.hr'].search([('id', '=', uid)])
+        return searched_records.unlink()

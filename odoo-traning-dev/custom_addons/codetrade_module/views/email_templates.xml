@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+      <record id="email_template_intern_registration" model="mail.template">
+        <field name="name">Intern Registration Email</field>
+        <field name="model_id" ref="model_intern_register"/>
+        <field name="email_from">${('pankajjangir1034@gmail.com')}</field>
+        <field name="email_to">${('pankajjangir3524@gmail.com')}</field>
+        <field name="subject">Welcome to the Team, ${object.intern_name}!</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Hello ${object.intern_name},</p>
+            <p>Welcome to our company! We are excited to have you on board.</p>
+            <p>Here are your details:</p>
+            <ul>
+                <li><strong>Email:</strong> ${object.intern_email}</li>
+                <li><strong>Mentor:</strong>${object.select_employee_id}
+            </ul>
+            <p>Best Regards,<br/>Company HR Team</p>
+            ]]>
+        </field>
+    </record>
+
+    <record id="email_template_hr_reminder" model="mail.template">
+        <field name="name">Intern Reminder for HR</field>
+        <field name="model_id" ref="model_intern_register"/>
+        <field name="email_from">${('pankajjangir1034@gmail.com')}</field>
+        <field name="email_to">${('pankajjangir3524@gmail.com')}</field>
+        <field name="subject">Reminder: Interns Assigned to You</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear ${object.select_hr_id.name},</p>
+            <p>This is a reminder that the following intern is assigned to you:</p>
+            <ul>
+                <li><strong>Name:</strong> ${object.intern_name}</li>
+                <li><strong>Email:</strong> ${object.intern_email}</li>
+            </ul>
+            <p>Please ensure that they have all the necessary resources to start their internship smoothly.</p>
+            <p>Best Regards,<br/>Company HR Team</p>
+            ]]>
+        </field>
+    </record>
+    
+</odoo>

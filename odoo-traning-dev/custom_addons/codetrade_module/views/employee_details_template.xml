@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="all_employee_data" name="Employee Details">
+        <t t-call="web.html_container">
+            <div class="container">
+                <center><h2 style="margin-top:20px;">EMPLOYEE DETAILS</h2></center>
+                <table  class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact No.</th>
+                            <th>Tech Stack</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="record" t-as="record">
+                            <tr>
+                                <td><span t-esc="record.name"/></td>
+                                <td><span t-esc="record.email"/></td>
+                                <td><span t-esc="record.contact"/></td>
+                                <td><span t-esc="record.tech_stack"/></td>
+                                <td><span t-esc="record.salary"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

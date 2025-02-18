@@ -7,12 +7,13 @@
              <field name="sequence">10</field>
         </record>
         
-        <!-- Employee Group -->
+        <!-- Intern Group -->
         <record id="company_intern_access" model="res.groups">
             <field name="name">Intern</field>
             <field name="category_id" ref="company_module_management"/>
         </record>
-
+        
+        <!-- Employee Group -->
         <record id="company_employee_access" model="res.groups">
             <field name="name">Employee</field>
             <field name="category_id" ref="company_module_management"/>

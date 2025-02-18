@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="all_hr_data" name="HR Details">
+        <t t-call="web.html_container">
+            <div class="container">
+                <center><h2>HR DETAILS</h2></center>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Joining Date</th>
+                            <th>Post</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="record" t-as="record">
+                            <tr>
+                                <td><span t-esc="record.name"/></td>
+                                <td><span t-esc="record.email"/></td>
+                                <td><span t-esc="record.contact"/></td>
+                                <td><span t-esc="record.joining_date"/></td>
+                                <td><span t-esc="record.hr_post"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

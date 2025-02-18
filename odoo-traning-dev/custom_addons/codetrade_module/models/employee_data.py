@@ -34,6 +34,9 @@ class EmployeeData(models.Model):
     def _check_validations(self):
         """Function that Validate the Contact"""
         for record in self:
+            if record.email and not re.match(r"[^@]+@[^@]+\.[^@]+", record.email):
+                raise ValidationError("Invalid email format. Please enter a valid email address.")
+
             if record.contact:
                 if not re.match(r"^(0|\+91|91)?[6-9][0-9]{9}$", record.contact):
                     raise ValidationError("Contact number must start with [6,7,8,9] and must be exactly 10 numeric digits.")
@@ -42,8 +45,7 @@ class EmployeeData(models.Model):
 
     @api.model
     def create(self, vals):
-        """Function to add user name and date"""
+        """Function to add current user-name and date"""
         vals['created_by'] = self.env.user.name
         vals['created_at'] = datetime.today()
         return super(EmployeeData, self).create(vals)
-

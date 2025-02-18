@@ -5,25 +5,55 @@
         <field name="model">intern.register</field>
         <field name="arch" type="xml">
             <form string="Add new Interns">
-                <group>
+                <sheet>
                     <group>
-                        <field name="select_employee_id" required="True"/>
-                        <field name="intern_name"/>
-                        <field name="intern_email"/>
+                        <group>
+                            <field name="select_employee_id" required="True"/>
+                            <field name="intern_name"/>
+                            <field name="intern_email"/>
+                        </group>
+                        <group>
+                            <field name="intern_id"/>
+                            <field name="intern_tech_stack"/>
+                            <field name="select_hr_id"/>
+                            <field name="hr_ids" widget="many2many_tags"/> 
+                        </group>
                     </group>
-                    <group>
-                        <field name="intern_id"/>
-                        <field name="intern_tech_stack"/>
-                        <field name="select_hr_id"/>
-                        <field name="hr_ids" widget="many2many_tags"/> 
-                    </group>
-                </group>
+                </sheet>
+                <sheet>
+                    <div style="width:500px; margin-left:20px; margin-top:10px; bg-color:#f8f9fa;">
+                        <group>
+                            <field name="created_by" readonly='True'/>
+                            <field name="created_at" readonly='True'/>
+                        </group>
+                    </div>
+                </sheet>
                 <footer>
                     <button name="confirm" string="Add" type="object" class="oe_highlight"/>
                     <button name="cancel" string="Cancel" type="object" class="oe_link"/>
                 </footer>
             </form>
         </field>
+    </record>
+
+    <record id="company_intern_list" model="ir.ui.view">
+        <field name="name">company.intern.list</field>
+        <field name="model">intern.register</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="intern_id"/>
+                <field name="intern_name"/>
+                <field name="intern_email"/>
+                <field name="intern_tech_stack"/>
+            </list>
+        </field>
+    </record>
+
+    <!--Intern Actions -->
+    <record id="intern_data_actions" model="ir.actions.act_window">
+        <field name="name">Intern Data</field>
+        <field name="res_model">intern.register</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>
 
