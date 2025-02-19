@@ -66,7 +66,32 @@ class CompanyInterns(models.TransientModel):
             for intern in interns:
                 if intern.select_hr_id:
                     template.send_mail(intern.id, force_send=True)
+from odoo import models, fields, api
+from datetime import datetime
 
+class CompanyInterns(models.TransientModel):
+    _name = "intern.register"
+    _description = "HR adds new Interns"
+
+    @api.model
+    def display_birthday_notification(self):
+        """Send real-time birthday notifications to logged-in users via bus.bus"""
+        today_date = datetime.today().date()
+        interns = self.search([('date_of_birth', '=', today_date)])
+
+        if interns:
+            for intern in interns:
+                message = {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'title': "🎉 Happy Birthday!",
+                        'type': 'success',
+                        'message': f"Today is {intern.intern_name}'s birthday! Wishing you a Happy Birthday 🎂",
+                        'sticky': True,  # Notification stays on screen
+                    }
+                }
+                self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', message)
     @staticmethod    
     def cancel():
         """This function close the wizard window"""
