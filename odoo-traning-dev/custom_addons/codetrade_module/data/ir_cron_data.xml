@@ -28,4 +28,13 @@
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
     </record>
+
+    <record id="ir_cron_intern_birthday_reminder" model="ir.cron">
+        <field name="name">Intern Birthday Notification</field>
+        <field name="model_id" ref="codetrade_module.model_intern_register"/>
+        <field name="state">code</field>
+        <field name="code">model.display_birthday_notification()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+    </record>
 </odoo>
