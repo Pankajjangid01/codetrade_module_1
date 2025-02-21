@@ -1,4 +1,1 @@
-from . import hr_controller
-from . import intern_controller
-from . import employee_controller
-
+from . import hr_controller,employee_controller,intern_controller,codetrade_controller,employee_form

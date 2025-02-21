@@ -8,8 +8,9 @@ class CompanyInterns(models.TransientModel):
     _name = "intern.register"
     _description = "HR adds new Interns"
     _rec_name = "intern_name"
+    _inherit = ['mail.thread','mail.activity.mixin']
 
-    select_intern_id = fields.Many2one("company.intern", string="Inter Data")
+    select_intern_id = fields.Many2one("intern.register", string="Intern Data")
     select_employee_id = fields.Many2one('company.employee', string="Assign to Employee")
     select_hr_id = fields.Many2one('company.hr', string="HR Reference") 
     intern_name = fields.Char(string="Intern Name")
@@ -64,7 +65,7 @@ class CompanyInterns(models.TransientModel):
                 'title': ("Registered Successfully"),
                 'type': 'success',
                 'message': ("Registration email sent successfully"),
-                'sticky': True,
+                'sticky': False,
             }
         }
         return notification
@@ -72,23 +73,13 @@ class CompanyInterns(models.TransientModel):
     @api.model
     def display_birthday_notification(self):
         """Function to display the notification to the intern on his birthday"""
-        import pdb;
-        pdb.set_trace()
         today_date = datetime.today().date()
         intern_birth_day = self.search([('date_of_birth','=',today_date)])
-        if intern_birth_day:
-            for each_intern in intern_birth_day:
-                notification = {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'title': ("Birthday Wishes"),
-                    'type': 'success',
-                    'message': ("Today is your birthday! Wishing you Happy Birthday"),
-                    'sticky': True,
-                    }
-                }
-            return notification
+
+        template = self.env.ref('codetrade_module.birthday_email_template')
+        if template:
+            for intern in intern_birth_day:
+                template.send_mail(intern.id,force_send=True)
 
     @api.model
     def send_intern_reminders(self):

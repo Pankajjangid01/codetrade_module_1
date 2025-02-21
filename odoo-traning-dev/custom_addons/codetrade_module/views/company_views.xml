@@ -39,7 +39,6 @@
                             </sheet>
                         </page>
                     </notebook>
-                </sheet>
                 <sheet>
                     <div style="width:500px; margin-left:20px; margin-top:10px; bg-color:#f8f9fa;">
                         <group>
@@ -47,6 +46,7 @@
                             <field name="created_at" readonly='True'/>
                         </group>
                     </div>
+                </sheet>
                 </sheet>
             </form>
         </field>

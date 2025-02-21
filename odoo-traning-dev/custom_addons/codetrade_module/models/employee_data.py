@@ -4,8 +4,10 @@ from datetime import datetime
 import re
 
 class EmployeeData(models.Model):
+    
     _name = "company.employee"
     _description = "Store the Data of the Employee's of the company"
+    _inherit = ['mail.thread','mail.activity.mixin']
 
     name = fields.Char(string="Employee Name")
     contact = fields.Char(string="Contact No.")

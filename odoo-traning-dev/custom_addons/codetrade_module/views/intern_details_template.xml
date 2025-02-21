@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="all_intern_data" name="Intern Details">
-        <t t-call="web.html_container">
+        <t t-call="website.layout">
             <div class="container">
                 <center><h2>Intern DETAILS</h2></center>
                 <table class="table table-bordered table-striped">

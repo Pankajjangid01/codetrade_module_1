@@ -1,6 +1,7 @@
 from odoo import models,fields
 
 class CompanyOffice(models.TransientModel):
+    
     _name = "office.register"
     _description = "Assign Office to the HR "
 

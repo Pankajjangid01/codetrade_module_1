@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 
 class HRData(models.Model):
+
     _name = "company.hr"
     _description = "Store the Data of the HRs of the company"
 

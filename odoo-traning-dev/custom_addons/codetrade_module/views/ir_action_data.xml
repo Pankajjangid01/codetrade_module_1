@@ -11,3 +11,52 @@
         </field>
     </record>
 </odoo>
+<!-- <odoo>
+    <template id="employee_form_template" name="Employee Form">
+        <t t-call="website.layout">
+            <div class="container mt-5 mb-5">
+                <h2>Employee Registration Form</h2>
+                <form action="/employee/form/submit" method="post">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" class="form-control"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" class="form-control"/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tech-stack">Tech-Stack:</label>
+                        <select name="tech-stack" id="tech" class="form-control">
+                            <option value="odoo">Odoo Developer</option>
+                            <option value="tester">Testing Developer</option>
+                            <option value="python">Python Developer</option>
+                            <option value="web">Web Developer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact">Contact:</label>
+                        <input type="text" name="contact" class="form-control"/>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="employee_form_success" name="Employee Form Success">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h2>Thank You!</h2>
+                <p>Your details have been successfully submitted.</p>
+                <a href="/employee/form" class="btn btn-secondary">Back to Form</a>
+            </div>
+        </t>
+    </template>
+</odoo> -->

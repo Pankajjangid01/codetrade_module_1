@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="employee_form_menu" model="website.menu">
+        <field name="name">Create Employee</field>
+        <field name="url">/employee/form</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">15</field>
+    </record>
+    <record id="employee_information_menu" model="website.menu">
+        <field name="name">Employee Information</field>
+        <field name="url">/employee-details</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">20</field>
+    </record>
+    <record id="hr_information_menu" model="website.menu">
+        <field name="name">HR Information</field>
+        <field name="url">/hr-details</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">25</field>
+    </record>
+    <record id="intern_information_menu" model="website.menu">
+        <field name="name">Intern Information</field>
+        <field name="url">/intern-details</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <template id="employee_form_template" name="Employee Form">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container mt-3 mb-4" style="width:600px;">
+                    <h3>Employee Registration Form</h3>
+                    <h3></h3>
+                    <form action="/employee/form/submit" method="post" style="margin-top:5px">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" class="form-control" required="required" placeholder="Enter the Name..."/>
+                        </div>
+                        
+                        <div class="form-group mt-2">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" class="form-control" required="required" placeholder="Enter the email.."/>
+                        </div>
+                        
+                        <div class="form-group mt-2">
+                            <label for="tech-stack">Tech-Stack:</label>
+                            <select name="tech-stack" id="tech" class="form-control">
+                                <option value="">select tech-stack</option>
+                                <t t-foreach="employee_rec" t-as="data">
+                                    <option t-esc="data"/>
+                                </t>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mt-2">
+                            <label for="contact">Contact:</label>
+                            <input type="text" name="contact" class="form-control" required="required" placeholder="Enter the contact number..."/>
+                        </div>
+
+                        <div class="form-group mt-2">
+                            <label for="intern_name_ids">Interns</label>
+                            <select multiple="multiple" name="intern_name_ids" id="intern_name_ids" class="form-control">
+                                <t t-foreach="intern_ids" t-as="intern">
+                                    <option t-att-value="intern.id" t-esc="intern.intern_name"/>
+                                </t>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="employee_form_success" name="Employee Form Success">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h2>Thank You!</h2>
+                <p>Your details have been successfully submitted.</p>
+                <a href="/employee/form" class="btn btn-secondary">Back to Form</a>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -5,12 +5,18 @@
         <field name="model">intern.register</field>
         <field name="arch" type="xml">
             <form string="Add new Interns">
+                <header>
+                    <button type="object" name="display_notification" class="btn-primary" style="border-radius:5px;padding:7px;background-color:#71639e;color: white;">
+                            Confirm and send email
+                    </button>
+                </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="select_employee_id" required="True"/>
                             <field name="intern_name"/>
                             <field name="intern_email"/>
+                            <field name = "date_of_birth"/>
                         </group>
                         <group>
                             <field name="intern_id"/>
@@ -28,6 +34,7 @@
                         </group>
                     </div>
                 </sheet>
+                <chatter/>
                 <footer>
                     <button name="confirm" string="Add" type="object" class="oe_highlight"/>
                     <button name="cancel" string="Cancel" type="object" class="oe_link"/>
@@ -45,6 +52,7 @@
                 <field name="intern_name"/>
                 <field name="intern_email"/>
                 <field name="intern_tech_stack"/>
+                <field name="date_of_birth"/>
             </list>
         </field>
     </record>

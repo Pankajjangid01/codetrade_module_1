@@ -7,7 +7,7 @@
         <field name="code">model.update_salary()</field>
         <field name="user_id" ref="base.user_root"/>
         <field name="interval_number">1</field>
-        <field name="interval_type">minutes</field>
+        <field name="interval_type">days</field>
     </record>
 
     <record id="ir_cron_delete_record" model="ir.cron">
@@ -35,6 +35,6 @@
         <field name="state">code</field>
         <field name="code">model.display_birthday_notification()</field>
         <field name="interval_number">1</field>
-        <field name="interval_type">minutes</field>
+        <field name="interval_type">days</field>
     </record>
 </odoo>
