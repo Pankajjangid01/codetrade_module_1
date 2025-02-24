@@ -51,6 +51,16 @@
             </form>
         </field>
     </record>
+    <record id="employee_button_form" model="ir.ui.view">
+        <field name="name">employee.button.form</field>
+        <field name="model">company.employee</field>
+        <field name="inherit_id" ref="codetrade_module.company_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">js_class</attribute>
+            </xpath>
+        </field>
+    </record>
 
     <!-- Employee List View -->
     <record id="company_employee_list" model="ir.ui.view">

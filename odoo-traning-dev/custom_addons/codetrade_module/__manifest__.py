@@ -3,9 +3,17 @@
     'version': '18.0.0.1',
     'summary': 'Company Management system to manage Company Data',
     'author': 'Codetrade.io',
-    'depends': ['mail','website'],
+    'depends': ['mail','website','sale'],
     'website':'https://www.codetrade.io/',
     'category':"Company Management",
+    'assets': {
+        'web.assets_backend': [
+        'codetrade_module/static/src/js/open_wizard_js.js',
+        'codetrade_module/static/src/js/notification.js',
+        'codetrade_module/static/src/xml/save_button_employee.xml',
+        'codetrade_module/static/src/xml/button.xml'
+        ],
+    },
     'data': [
         'data/ir_cron_data.xml',
         'views/ir_action_data.xml',
@@ -18,6 +26,7 @@
         'views/hr_details_template.xml',
         'views/employee_form_template.xml',
         'views/employee_full_details_template.xml',
+        'views/form_view_button.xml',
         'views/employee_details_template.xml',
         'views/intern_details_template.xml',
         'views/codetrade_home_template.xml',

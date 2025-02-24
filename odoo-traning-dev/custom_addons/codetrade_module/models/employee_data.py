@@ -2,7 +2,8 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import datetime
 import re
-
+import logging
+_logger = logging.getLogger(__name__)
 class EmployeeData(models.Model):
     
     _name = "company.employee"
@@ -51,3 +52,9 @@ class EmployeeData(models.Model):
         vals['created_by'] = self.env.user.name
         vals['created_at'] = datetime.today()
         return super(EmployeeData, self).create(vals)
+    
+    @api.model
+    def printt(self):
+        _logger.info("A teacher with this email already exists!")
+        print("Save button click using js in python")
+    

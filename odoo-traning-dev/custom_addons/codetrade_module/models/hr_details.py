@@ -50,6 +50,7 @@ class HRData(models.Model):
         vals['created_at'] = datetime.today()
         return super(HRData, self).create(vals)
 
+    @api.model
     def action_open_hr_wizard(self):
         """Function to open the HR wizard"""
         return {
