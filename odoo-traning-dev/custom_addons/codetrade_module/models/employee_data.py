@@ -49,6 +49,8 @@ class EmployeeData(models.Model):
     @api.model
     def create(self, vals):
         """Function to add current user-name and date"""
+        import pdb;
+        pdb.set_trace()
         vals['created_by'] = self.env.user.name
         vals['created_at'] = datetime.today()
         return super(EmployeeData, self).create(vals)

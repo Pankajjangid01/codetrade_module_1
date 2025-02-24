@@ -10,18 +10,25 @@ export class EmployeeFormController extends FormController{
         super.setup();
         this.actionService = useService("action");
         this.notification = useService("notification")
+        this.orm = useService("orm");
     }
     
-    async onSaveButton(record) {
+    async onSaveButton(data) {
         console.log("---------------------Testing-----------------------------")
-        await this.operations._onSave(record).then((record)=>{this.notification.add(
-            _t("Message detail."), 
-            { 
-                title: _t("Record saved successfully"), 
-                type: "success", 
-                sticky: false
-            }
-        );})
+        return this.orm.call("company.employee", "create",["data",{
+            email:"pankaj@gmail.com",
+            contact:6377589985,
+            name:"Pankaj"
+        }]);
+
+        // await this.notification.add(
+        //     _t("Message detail."), 
+        //     { 
+        //         title: _t("Record saved successfully"), 
+        //         type: "success", 
+        //         sticky: false
+        //     }
+        // );
         
     }
 }
@@ -32,3 +39,8 @@ export const modelInfoView = {
     Controller: EmployeeFormController,
 };
 registry.category("views").add("button_in_employee_form", modelInfoView);
+//  error-->>File "/usr/lib/python3/dist-packages/odoo/api.py", line 517, in call_kw
+//     result = getattr(recs, name)(*args, **kwargs)
+//     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// TypeError: create() takes 2 positional arguments but 3 were given
+
