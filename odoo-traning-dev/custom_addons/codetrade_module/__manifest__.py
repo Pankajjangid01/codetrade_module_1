@@ -10,6 +10,7 @@
         'web.assets_backend': [
         'codetrade_module/static/src/js/open_wizard_js.js',
         'codetrade_module/static/src/js/notification.js',
+        'codetrade_module/static/src/js/sale_quotation_email.js',
         'codetrade_module/static/src/xml/save_button_employee.xml',
         'codetrade_module/static/src/xml/button.xml'
         ],
@@ -30,6 +31,7 @@
         'views/employee_details_template.xml',
         'views/intern_details_template.xml',
         'views/codetrade_home_template.xml',
+        'views/sale_model_view.xml',
         'wizard/company_office_wizard.xml',
         'wizard/company_intern_wizard.xml',
     ],

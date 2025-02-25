@@ -7,7 +7,7 @@
             <form string="Add new Interns">
                 <header>
                     <button type="object" name="display_notification" class="btn-primary" style="border-radius:5px;padding:7px;background-color:#71639e;color: white;">
-                            Confirm and send email
+                        Confirm and send email
                     </button>
                 </header>
                 <sheet>

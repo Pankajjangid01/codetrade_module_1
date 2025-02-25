@@ -1,2 +1,1 @@
-from . import employee_data
-from . import hr_details
+from . import employee_data,hr_details,sale_model
