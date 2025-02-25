@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
+from odoo import models, fields, modules
+import base64
+
+class SaleInvoice(models.Model):
+    _inherit = 'sale.order'
+
+    def action_download_invoice(self):
+        """Generate the sale quotation PDF and send it as an email attachment."""
+        report_ref = self.env.ref('sales_module.action_report_sale_product')
+        pdf_content, content_type = report_ref._render_qweb_pdf(self.id)
+
+        # Encode the PDF in base64
+        pdf_base64 = base64.b64encode(pdf_content)
+
+        # Create an attachment record
+        attachment = self.env['ir.attachment'].create({
+            'name': f'Sale_Quotation_{self.name}.pdf',
+            'type': 'binary',
+            'datas': pdf_base64,
+            'res_model': 'sale.order',
+            'res_id': self.id,
+            'mimetype': 'application/pdf',
+        })
+
+        # Find the email template
+        template = self.env.ref('sales_module.email_template_sale_quotation')
+
+        if template:
+            # Send email with the attachment
+            template.send_mail(self.id, force_send=True, email_values={'attachment_ids': [(4, attachment.id)]})
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{attachment.id}?download=true',
+            'target': 'self',
+        }<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="email_template_intern_registration" model="mail.template">
         <field name="name">Intern Registration Email</field>
