@@ -1,4 +1,21 @@
-from odoo import models, fields, modules
+<odoo>
+    <record id="email_template_sale_quotation" model="mail.template">
+        <field name="name">Sale Quotation Email</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="email_from">{{ 'pankajjangi1034@gmail.com' }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="subject">Sale Quotation Created Successfully</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <strong><t t-out="object.partner_id.name"/></strong>,</p>
+                <p>Your sale quotation has been successfully created.</p>
+                <p>Please find the attached PDF for your reference.</p>
+                <p>Thanks and feel free to reach out to us.</p>
+            </div>
+        </field>
+        <field name="attachment_ids" eval="[(4, attachment.id)]"/>
+    </record>
+</odoo>from odoo import models, fields, modules
 import base64
 
 class SaleInvoice(models.Model):
