@@ -18,9 +18,19 @@ export class SaleQuotationController extends FormController {
             const result = await super.onRecordSaved(record);
             const recordData = this.props.resId;
 
-            const pdf_data = this.orm.call('sale.order','action_download_invoice',[recordData])
-            console.log("printing pdf data------------->>>>",pdf_data)
-            await this.orm.call('sale.order','display_notification',[recordData])
+            // Get the PDF report action URL
+            const pdfAction = await this.orm.call('sale.order', 'action_download_invoice', [recordData]);
+
+            console.log("Generated PDF action:", pdfAction);
+
+            // Redirect to download the report
+            if (pdfAction && pdfAction.report_type === 'qweb-pdf') {
+                const downloadUrl = `/report/pdf/${pdfAction.report_name}/${recordData}`;
+                window.open(downloadUrl, '_blank'); // Open the PDF in a new tab
+            }
+
+            // Send notification
+            await this.orm.call('sale.order', 'display_notification', [recordData]);
             this.notification.add(_t("Sale Quotation created successfully!"), {
                 title: _t("Success"),
                 type: "success",
