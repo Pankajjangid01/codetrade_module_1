@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="prescription_details_form" model="ir.ui.view">
         <field name="name">prescription.details.form</field>
@@ -6,12 +5,13 @@
         <field name="arch" type="xml">
             <form string="Prescription Form">
                 <sheet>
-                    <h1 style="font-size:35px">Patient and Docter Information</h1>
+                    <h1 style="font-size:35px">Patient and Doctor Information</h1>
                     <group>
                         <group>
                             <field name="patient_id"/>
                             <field name="prescription_date"/>
-                            <field name="pharmacy"/>
+                            <field name="appointment_id"/>  <!-- Link Appointment -->
+                            <field name="health_center"/>  <!-- Display Health Center -->
                         </group>
                         <group>
                             <field name="prescription_id"/>
@@ -31,11 +31,5 @@
                 </sheet>
             </form>
         </field>
-    </record>
-
-     <record id="prescription_details_actions" model="ir.actions.act_window">
-        <field name="name">Prescription Data</field>
-        <field name="res_model">prescription.prescription</field>
-        <field name="view_mode">list,form</field>
     </record>
 </odoo>
