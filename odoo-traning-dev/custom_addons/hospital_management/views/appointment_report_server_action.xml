@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="appointment_report_acrtion" model="ir.actions.server">
+        <field name="name">Print Appointment Recipts</field>
+        <field name="model_id" ref="hospital_management.model_appointment_appointment"/>
+        <field name="binding_model_id" ref="hospital_management.model_appointment_appointment"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_download_appointment_report()
+        </field>
+    </record>
+</odoo>
