@@ -13,3 +13,5 @@ access_apache_score,access_apache_score,model_intensive_apache,,1,1,1,1
 access_ecg_access,access_ecg_access,model_intensive_ecg,,1,1,1,1
 access_gcs_access,access_gcs_access,model_intensive_gcs,,1,1,1,1
 access_pediatrics_symptoms,access_pediatrics_symptoms,model_pediatrics_pediatrics,,1,1,1,1
+access_newborn_baby,access_newborn_baby,model_newborn_baby,,1,1,1,1
+access_apgar_score,access_apgar_score,model_apgar_score,,1,1,1,1

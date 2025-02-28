@@ -1,1 +1,1 @@
-from . import patient,appointments,prescription,administration,intensive_care,pediatrics
+from . import patient,appointments,prescription,administration,intensive_care,pediatrics,newborn_baby

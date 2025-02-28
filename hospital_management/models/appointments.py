@@ -9,7 +9,7 @@ class Appointments(models.Model):
     _description = "Appointment model to handle the patient appointments"
     _rec_name = "appointment_id"
 
-    appointment_id = fields.Char(default=lambda self: self.env['ir.sequence'].next_by_code('appointment.appointment'), readonly=True, copy=False,)
+    appointment_id = fields.Char(default=lambda self: ('New'), readonly=True, copy=False,)
     patient_id = fields.Many2one('patient.patient')
     physician = fields.Char(string="Physician")
     speciality = fields.Char(string="Speciality")
@@ -45,6 +45,11 @@ class Appointments(models.Model):
         ('operations','Operations Consulting')
     ], string="Consulting Service")
     invoice_id = fields.Char(compute="action_create_invoice")
+
+    def create(self, vals):
+        """Automatically generate a reference number for new Administration."""
+        vals['appointment_id'] = self.env['ir.sequence'].next_by_code('appointment.appointment')
+        return super(Appointments, self).create(vals)
 
     @api.onchange('appointment_date', 'appointment_end')
     def _onchange_compute_duration(self):

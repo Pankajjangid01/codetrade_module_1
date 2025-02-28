@@ -1,5 +1,8 @@
 from datetime import date
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+import re;
+
 
 class Patient(models.Model):
     """Patient Class to handle the patient data"""
@@ -19,7 +22,7 @@ class Patient(models.Model):
     ])
     patient_address = fields.Char(string="Address")
     patient_image = fields.Binary(string="Image")
-    patient_age = fields.Char(string="Age")
+    patient_age = fields.Char(string="Age",readonly=True)
     blood_type = fields.Selection([
         ('A', 'A'),
         ('B', 'B'),
@@ -44,6 +47,12 @@ class Patient(models.Model):
     patient_receivable = fields.Float(string="Receivable")
     patient_primary_care_doctor = fields.Char(string="Primary Care Doctor")
     patient_deceased = fields.Boolean(string="Deceased")
+
+    @api.constrains('name')
+    def check_patient_name(self):
+        for record in self:
+            if record.name and not re.match(r"[^a-zA-z][a-zA-z]*", record.name):
+                raise ValidationError("Please enter a valid name.")
 
     @api.onchange('patient_date_of_birth')
     def _onchange_compute_patient_age(self):

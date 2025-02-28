@@ -1,7 +1,7 @@
 """
     Prescription Module to create the prescription table to store the patient prescription details
 """
-from odoo import models, fields
+from odoo import models, fields,api
 
 class Prescription(models.Model):
     """Prescription Class to handle the prescription of patient"""
@@ -17,12 +17,19 @@ class Prescription(models.Model):
         ('niims',"NIIMS"),
         ('shh',"Steve Hopkins Hospital")
         ], string="Pharmacy")
-    prescription_id = fields.Char(default=lambda self:self.env['ir.sequence'].next_by_code('prescription.prescription'),readonly=True, copy=False,string="Prescription Id")
+    prescription_id = fields.Char(default=lambda self: ('New'),readonly=True, copy=False,string="Prescription Id")
     login_user = fields.Many2one("res.users",default=lambda self:self.env.user.name, string="Login User",)
     prescribing_doctor = fields.Char(string="Prescribing Doctor")
     invoice_to_insurance = fields.Boolean(string="Invoice to Insurance")
     prescription_details_ids = fields.Many2many("medicine.medicine")
 
+
+    @api.model
+    def create(self, vals):
+        """Automatically generate a reference number for new Administration."""
+        vals['prescription_id'] = self.env['ir.sequence'].next_by_code('prescription.prescription')
+        return super(Prescription, self).create(vals)
+    
     def prescription_report_download(self):
         """Triggers the PDF report generation and download."""
         return self.env.ref('hospital_management.action_report_prescription_data').report_action(self)

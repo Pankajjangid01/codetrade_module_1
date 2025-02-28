@@ -20,4 +20,5 @@
 
     <menuitem id="patient_pediatrics" name="Pediatrics" parent="hospital_menuitems" sequence="14"/>
     <menuitem id="patient_pediatrics_symptomps" name="Pediatrics Symptomps" parent="patient_pediatrics" action="pediatrics_symptomps_actions"/>
+    <menuitem id="newborn_baby_menu" name="Newborn" parent="patient_pediatrics" action="newborn_baby_actions"/>
 </odoo>

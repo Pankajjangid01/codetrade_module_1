@@ -25,7 +25,9 @@
         'views/intensive_apache_score_views.xml',
         'views/intensive_ecg_views.xml',
         'views/intensive_gcs_views.xml',
-        'views/pediatrics_symptoms_views.xml'
+        'views/pediatrics_symptoms_views.xml',
+        'views/new_born_baby_views.xml',
+        'report/newborn_baby_report.xml'
     ],
     'installable': True,
     'license': 'LGPL-3',
