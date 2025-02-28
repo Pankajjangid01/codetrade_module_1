@@ -22,7 +22,7 @@
                         <group>
                             <field name="patient_gender"/>
                             <field name="patient_address"/>
-                            <field name="patient_age"/>
+                            <field name="patient_age" force_save="1"/>
                         </group>
                     </group>
                     <h1 style="margin-top:30px">Patient Critical Information</h1>

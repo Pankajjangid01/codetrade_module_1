@@ -50,9 +50,10 @@ class Patient(models.Model):
 
     @api.constrains('name')
     def check_patient_name(self):
-        for record in self:
-            if record.name and not re.match(r"[^a-zA-z][a-zA-z]*", record.name):
-                raise ValidationError("Please enter a valid name.")
+        import pdb;
+        pdb.set_trace()
+        if self.name and re.findall(r"[^a-zA-z][a-zA-z ]*", self.name):
+            raise ValidationError("Please enter a valid name.")
 
     @api.onchange('patient_date_of_birth')
     def _onchange_compute_patient_age(self):

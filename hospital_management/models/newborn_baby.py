@@ -1,4 +1,6 @@
-from odoo import models,fields
+from odoo import models,fields,api
+from odoo.exceptions import ValidationError
+import re
 
 class NewbornBaby(models.Model):
 
@@ -29,6 +31,14 @@ class NewbornBaby(models.Model):
     def action_download_newborn_data(self):
         """Triggers the PDF report generation and download."""
         return self.env.ref('hospital_management.action_report_patient_data').report_action(self)
+    
+
+    @api.constrains('name')
+    def check_baby_name(self):
+        import pdb;
+        pdb.set_trace()
+        if self.baby_name and re.findall(r"[^a-zA-z][a-zA-z ]*", self.baby_name):
+            raise ValidationError("Please enter a valid name.")
 
 class ApgarScore(models.Model):
 
