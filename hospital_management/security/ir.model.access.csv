@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_patient_data,access_patient_data,model_patient_patient,,1,1,1,1
+access_appintment_data,access_appintment_data,model_appointment_appointment,,1,1,1,1
+access_presciption_data,access_presciption_data,model_prescription_prescription,,1,1,1,1
+access_medicine_data,access_medicine_data,model_medicine_medicine,,1,1,1,1
+access_administration_data,access_administration_data,model_administration_administration,,1,1,1,1
+access_hospital_bed,access_hospital_bed,model_hospital_bed,,1,1,1,1
+access_bed_transfer,access_bed_transfer,model_bed_transfer,,1,1,1,1
+access_bed_wizard,access_bed_wizard,model_hospital_bed_transfer_wizard,,1,1,1,1
+access_patient_icu,access_patient_icu,model_intensive_icu,,1,1,1,1
+access_mechnical_ventilation,access_mechnical_ventilation,model_mechnical_ventilation,,1,1,1,1
+access_apache_score,access_apache_score,model_intensive_apache,,1,1,1,1
+access_ecg_access,access_ecg_access,model_intensive_ecg,,1,1,1,1
+access_gcs_access,access_gcs_access,model_intensive_gcs,,1,1,1,1
+access_pediatrics_symptoms,access_pediatrics_symptoms,model_pediatrics_pediatrics,,1,1,1,1
