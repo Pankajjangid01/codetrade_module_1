@@ -50,8 +50,7 @@ class Patient(models.Model):
 
     @api.constrains('name')
     def check_patient_name(self):
-        import pdb;
-        pdb.set_trace()
+        """Method to validate the name of the patient"""
         if self.name and re.findall(r"[^a-zA-z][a-zA-z ]*", self.name):
             raise ValidationError("Please enter a valid name.")
 

@@ -27,7 +27,11 @@
         'views/intensive_gcs_views.xml',
         'views/pediatrics_symptoms_views.xml',
         'views/new_born_baby_views.xml',
-        'report/newborn_baby_report.xml'
+        'report/newborn_baby_report.xml',
+        'views/draft_test_laboratory_view.xml',
+        'wizard/lab_result_wizard_views.xml',
+        'wizard/lab_test_info_views.xml',
+        'views/today_lab_request_view.xml'
     ],
     'installable': True,
     'license': 'LGPL-3',

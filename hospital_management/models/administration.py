@@ -1,4 +1,6 @@
 from odoo import fields, models, api,exceptions,_
+from datetime import date
+from odoo.exceptions import ValidationError
 
 class Administration(models.Model):
     _name = "administration.administration"
@@ -40,6 +42,13 @@ class Administration(models.Model):
                 record.operating_physician = record.patient_id.patient_primary_care_doctor
             else:
                 record.attending_physician = ""
+
+    @api.constrains('hospitalization_date')
+    def check_hospitalization_date(self):
+        """Method to calidate the patient hospitalization date"""
+        today = date.today()
+        if self.hospitalization_date > today:
+            raise ValidationError("Please enter today's date or past date")
 
     def button_in_progress(self):
         """Used to change the state to in_progress"""

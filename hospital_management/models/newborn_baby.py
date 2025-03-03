@@ -1,5 +1,6 @@
 from odoo import models,fields,api
 from odoo.exceptions import ValidationError
+from datetime import date
 import re
 
 class NewbornBaby(models.Model):
@@ -35,10 +36,15 @@ class NewbornBaby(models.Model):
 
     @api.constrains('name')
     def check_baby_name(self):
-        import pdb;
-        pdb.set_trace()
+        """Method to validate the name of new born baby"""
         if self.baby_name and re.findall(r"[^a-zA-z][a-zA-z ]*", self.baby_name):
             raise ValidationError("Please enter a valid name.")
+    
+    @api.constrains('date_of_birth')
+    def check_child_age(self):
+        today = date.today()
+        if self.date_of_birth > today:
+            raise ValidationError("Date of birth can not be future date")
 
 class ApgarScore(models.Model):
 

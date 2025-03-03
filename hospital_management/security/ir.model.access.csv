@@ -15,3 +15,8 @@ access_gcs_access,access_gcs_access,model_intensive_gcs,,1,1,1,1
 access_pediatrics_symptoms,access_pediatrics_symptoms,model_pediatrics_pediatrics,,1,1,1,1
 access_newborn_baby,access_newborn_baby,model_newborn_baby,,1,1,1,1
 access_apgar_score,access_apgar_score,model_apgar_score,,1,1,1,1
+access_draft_test,access_draft_test,model_draft_laboratory,,1,1,1,1
+access_lab_test_wizard,access_lab_test_wizard,model_lab_result,,1,1,1,1
+access_lab_test_info,access_lab_test_info,model_lab_test_info,,1,1,1,1
+access_patient_total_cases,access_patient_total_cases,model_patient_total_cases,,1,1,1,1
+access_today_lab_request,access_today_lab_request,model_today_lab_request,,1,1,1,1

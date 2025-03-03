@@ -21,4 +21,8 @@
     <menuitem id="patient_pediatrics" name="Pediatrics" parent="hospital_menuitems" sequence="14"/>
     <menuitem id="patient_pediatrics_symptomps" name="Pediatrics Symptomps" parent="patient_pediatrics" action="pediatrics_symptomps_actions"/>
     <menuitem id="newborn_baby_menu" name="Newborn" parent="patient_pediatrics" action="newborn_baby_actions"/>
+
+    <menuitem id="laboratory_menu" name="Laboratory" parent="hospital_menuitems" sequence="15"/>
+    <menuitem id="lab_requests_menu" name="Lab Requests" parent="laboratory_menu" action="draft_laboratory_test_actions"/>
+    <menuitem id="today_draft_lab_requests_menu" name="Today's Draft Lab Requests" parent="laboratory_menu" action="today_lab_request_actions"/>
 </odoo>

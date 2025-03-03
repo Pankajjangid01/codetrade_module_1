@@ -1,7 +1,5 @@
-"""
-    Appointment module to create the appointment table and store the appointment of the patient
-"""
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class Appointments(models.Model):
     """Appointment Class to create the appointment dof the patient"""
@@ -64,3 +62,9 @@ class Appointments(models.Model):
     def action_download_appointment_report(self):
         """Triggers the PDF report generation and download."""
         return self.env.ref('hospital_management.action_report_appointment_data').report_action(self)
+    
+    @api.constrains('appointment_end')
+    def validate_appointment_end_date(self):
+        """"""
+        if self.appointment_end < self.appointment_date:
+            raise ValidationError("Appointment End Date can not be the date before Appointment Start Date")

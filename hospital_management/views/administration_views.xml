@@ -49,6 +49,21 @@
         </field>
     </record>
 
+    <record id="administration_details_list" model="ir.ui.view">
+        <field name="name">administration.details.list</field>
+        <field name="model">administration.administration</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="registration_code"/>
+                <field name="patient_id"/>
+                <field name="hospitalization_date"/>
+                <field name="discharge_date"/>
+                <field name="hospital_bed_num"/>
+                <field name="admission_type"/>
+            </list>
+        </field>
+    </record>
+
     <record id="administration_details_actions" model="ir.actions.act_window">
         <field name="name">Administration Data</field>
         <field name="res_model">administration.administration</field>
