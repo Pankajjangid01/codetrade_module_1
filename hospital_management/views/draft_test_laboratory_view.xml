@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<record id="draft_laboratory_test_form" model="ir.ui.view">
+    <field name="name">draft.laboratory.test.form</field>
+    <field name="model">draft.laboratory</field>
+    <field name="arch" type="xml">
+        <form string='Draft Lab Request'>
+            <header>
+                <button name="action_open_test_wizard" type="object" string="Create Lab Result" class="oe_highlight" attrs="{'invisible': [('state', '=', 'tested')]}"/>
+                <button name="action_cancel" type="object" string="Cancel" class="oe_link" attrs="{'invisible': [('state', '=', 'tested')]}"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,tested,cancel"/>
+            </header>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="test_type"/>
+                        <field name="test_date"/>
+                        <field name="invoice_to_insaurance"/>
+                    </group>
+                    <group>
+                        <field name="patient_id"/>
+                        <field name="patient_doctor" force_save="True"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record><?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="draft_laboratory_test_form" model="ir.ui.view">
         <field name="name">draft.laboratory.test.form</field>
