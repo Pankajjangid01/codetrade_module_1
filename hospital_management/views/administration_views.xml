@@ -69,4 +69,16 @@
         <field name="res_model">administration.administration</field>
         <field name="view_mode">list,form</field>
     </record>
+</odoo><?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hide_print_button_appointment" model="ir.ui.view">
+        <field name="name">hide.print.button.appointment</field>
+        <field name="model">appointment.appointment</field>
+        <field name="inherit_id" ref="web.view_action"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='print']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
