@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hide_print_button_appointment" model="ir.ui.view">
+        <field name="name">hide.print.button.appointment</field>
+        <field name="model">appointment.appointment</field>
+        <field name="inherit_id" ref="hospital_management.appointment_details_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="js_class">print_button_in_list</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

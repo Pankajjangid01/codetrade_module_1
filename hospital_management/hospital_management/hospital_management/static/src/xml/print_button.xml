@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="print_button_test" t-inherit="web.ActionMenus">
+        <xpath expr="//button[@name='print']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+   </t>
+</templates>
