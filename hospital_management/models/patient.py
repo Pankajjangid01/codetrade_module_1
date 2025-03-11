@@ -1,4 +1,89 @@
-from datetime import date
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import ValidationError
+from datetime import date, timedelta
+
+class TestPatientModel(TransactionCase):
+
+    def setUp(self):
+        super().setUp()
+        self.Patient = self.env['patient.patient']
+        self.physician = self.env['physician.physician'].create({'name': 'Dr. Smith'})
+        self.disease = self.env['diseases.category'].create({'name': 'Fever'})
+
+    def test_patient_name_valid(self):
+        patient = self.Patient.create({
+            'name': 'John Doe',
+            'patient_gender': 'male',
+            'patient_date_of_birth': '2000-01-01',
+        })
+        self.assertEqual(patient.name, 'John Doe')
+
+    def test_patient_name_invalid(self):
+        with self.assertRaises(ValidationError):
+            self.Patient.create({
+                'name': 'John123!',
+                'patient_gender': 'male',
+                'patient_date_of_birth': '2000-01-01',
+            })
+
+    def test_patient_age_computation(self):
+        dob = date.today() - timedelta(days=365*25 + 30)  # Approx 25 years and 30 days ago
+        patient = self.Patient.create({
+            'name': 'Jane Smith',
+            'patient_gender': 'female',
+            'patient_date_of_birth': dob,
+        })
+        patient._onchange_compute_patient_age()
+        self.assertIn('years', patient.patient_age)
+
+    def test_patient_dob_in_future(self):
+        future_dob = date.today() + timedelta(days=5)
+        with self.assertRaises(ValidationError):
+            self.Patient.create({
+                'name': 'Future Patient',
+                'patient_gender': 'male',
+                'patient_date_of_birth': future_dob,
+            })
+
+    def test_action_show_patient_appointments(self):
+        patient = self.Patient.create({
+            'name': 'Alex',
+            'patient_gender': 'male',
+            'patient_date_of_birth': '1995-06-15',
+        })
+        action = patient.action_show_patient_appointments()
+        self.assertEqual(action['res_model'], 'appointment.appointment')
+        self.assertIn(('patient_id', '=', patient.id), action['domain'])
+
+    def test_action_show_lab_results(self):
+        patient = self.Patient.create({
+            'name': 'Test Lab',
+            'patient_gender': 'female',
+            'patient_date_of_birth': '1990-05-10',
+        })
+        action = patient.action_show_patient_lab_result()
+        self.assertEqual(action['res_model'], 'lab.test.info')
+        self.assertIn(('patient_id', '=', patient.id), action['domain'])
+
+    def test_action_show_prescriptions(self):
+        patient = self.Patient.create({
+            'name': 'Test Prescription',
+            'patient_gender': 'female',
+            'patient_date_of_birth': '1988-12-12',
+        })
+        action = patient.action_show_patient_prescription_orders()
+        self.assertEqual(action['res_model'], 'prescription.prescription')
+        self.assertIn(('patient_id', '=', patient.id), action['domain'])
+
+    def test_action_show_pcs(self):
+        patient = self.Patient.create({
+            'name': 'Test PCS',
+            'patient_gender': 'male',
+            'patient_date_of_birth': '2002-09-09',
+        })
+        action = patient.action_show_patient_pcs_total()
+        self.assertEqual(action['res_model'], 'pediatrics.pediatrics')
+        self.assertIn(('patient_id', '=', patient.id), action['domain'])from datetime import date
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 import re;
