@@ -1,92 +1,45 @@
-<odoo>
-    <!-- Student Tree View -->
-    <record id="view_school_student_tree" model="ir.ui.view">
-        <field name="name">school.student.tree</field>
-        <field name="model">school.student</field>
-        <field name="arch" type="xml">
-            <tree string="Students">
-                <field name="name"/>
-            </tree>
-        </field>
-    </record>
+from odoo import models, fields, api
 
-    <!-- Student Form View -->
-    <record id="view_school_student_form" model="ir.ui.view">
-        <field name="name">school.student.form</field>
-        <field name="model">school.student</field>
-        <field name="arch" type="xml">
-            <form string="Student">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                    </group>
-                    <notebook>
-                        <page string="Subjects">
-                            <field name="subject_ids">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="marks"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
-        </field>
-    </record>
+class SchoolStudent(models.Model):
+    _name = 'school.student'
+    _description = 'Student Record'
 
-    <!-- Subject Tree View -->
-    <record id="view_school_subject_tree" model="ir.ui.view">
-        <field name="name">school.subject.tree</field>
-        <field name="model">school.subject</field>
-        <field name="arch" type="xml">
-            <tree string="Subjects">
-                <field name="name"/>
-                <field name="marks"/>
-                <field name="student_id"/>
-            </tree>
-        </field>
-    </record>
+    name = fields.Char(string='Student Name')
+    subject_ids = fields.One2many('school.subject', 'student_id', string='Subjects')
 
-    <!-- Subject Form View -->
-    <record id="view_school_subject_form" model="ir.ui.view">
-        <field name="name">school.subject.form</field>
-        <field name="model">school.subject</field>
-        <field name="arch" type="xml">
-            <form string="Subject">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="marks"/>
-                        <field name="student_id"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
+    @api.model
+    def create(self, vals):
+        """Function to create new student"""
+        print("printing record data------",vals)
+        return super(SchoolStudent, self).create(vals)
 
-    <!-- Actions -->
-    <record id="action_school_student" model="ir.actions.act_window">
-        <field name="name">Students</field>
-        <field name="res_model">school.student</field>
-        <field name="view_mode">tree,form</field>
-    </record>
+    # def create_student(self):
+    #     student = self.env['school.student'].create({
+    #         'name': 'Pankaj Kumar',
+    #         'subject_ids': [
+    #             (0, 0, {'name': 'Math', 'marks': 90}),
+    #             (0, 0, {'name': 'Science', 'marks': 85}),
+    #         ]
+    #     })
+    #     return student
 
-    <record id="action_school_subject" model="ir.actions.act_window">
-        <field name="name">Subjects</field>
-        <field name="res_model">school.subject</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-</odoo>
+    def update_student_data(self):
+        self.update({
+            'subject_ids': [(fields.Command.update(self.id, {'marks':55}))]
+        })
+    
+    def delete_student_data(self):
+        self.update({
+            'subject_ids': [(fields.Command.delete(self.id)) ]
+        })
 
-<odoo>
-    <menuitem id="school_management_menu_root" name="School Management"/>
 
-    <menuitem id="menu_school_students" name="Students"
-              parent="school_management_menu_root"
-              action="action_school_student"/>
 
-    <menuitem id="menu_school_subjects" name="Subjects"
-              parent="school_management_menu_root"
-              action="action_school_subject"/>
-</odoo>
+
+class SchoolSubject(models.Model):
+    _name = 'school.subject'
+    _description = 'Subjects'
+
+    name = fields.Char(string='Subject Name')
+    marks = fields.Integer(string='Marks')
+    student_id = fields.Many2one('school.student', string='Student')
