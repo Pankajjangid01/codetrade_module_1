@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<odoo>
+    <!-- Student Form View -->
+    <record id="view_school_student_form" model="ir.ui.view">
+        <field name="name">school.student.form</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <header>
+                    <button name="create_student_with_subjects" type="object" string="Create Student" class="oe_highlight"/>
+                    <button name="update_subject_marks" type="object" string="Update Student" class="oe_highlight"/>
+                    <button name="remove_subject" type="object" string="Remove Subject" class="oe_highlight"/>
+                    <button name="unlink_subject_relation_only" type="object" string="Unlink Subject" class="oe_highlight"/>
+                    <button name="unlink_all_relation" type="object" string="Unlink All Subject" class="oe_highlight"/>
+                    <button name="link_existing_subject" type="object" string="link Subject" class="oe_highlight"/>
+                    <button name="replace_all_subjects" type="object" string="Replace Subject" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Subjects">
+                            <field name="subject_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="marks"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Student list view -->
+    <record id="view_school_student_tree" model="ir.ui.view">
+        <field name="name">school.student.tree</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <list string="Students">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Subject Form View -->
+    <record id="view_school_subject_form" model="ir.ui.view">
+        <field name="name">school.subject.form</field>
+        <field name="model">school.subject</field>
+        <field name="arch" type="xml">
+            <form string="Subject">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="marks"/>
+                        <field name="student_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Subject List View -->
+    <record id="view_school_subject_tree" model="ir.ui.view">
+        <field name="name">school.subject.tree</field>
+        <field name="model">school.subject</field>
+        <field name="arch" type="xml">
+            <list string="Subjects">
+                <field name="name"/>
+                <field name="marks"/>
+                <field name="student_id"/>
+            </list>
+        </field>
+    </record>
+    
+    <!-- Actions -->
+    <record id="action_school_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_school_subject" model="ir.actions.act_window">
+        <field name="name">Subjects</field>
+        <field name="res_model">school.subject</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

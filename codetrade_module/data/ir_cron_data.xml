@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_cron_update_salary" model="ir.cron">
+        <field name="name">Update salary</field>
+        <field name="model_id" ref="codetrade_module.model_company_hr"/>
+        <field name="state">code</field>
+        <field name="code">model.update_salary()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+
+    <record id="ir_cron_delete_record" model="ir.cron">
+        <field name="name">Delete Record</field>
+        <field name="model_id" ref="codetrade_module.model_company_hr"/>
+        <field name="state">code</field>
+        <field name="code">model.delete_record()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+   
+    <record id="ir_cron_intern_reminder" model="ir.cron">
+        <field name="name">Send Intern Reminder Emails</field>
+        <field name="model_id" ref="codetrade_module.model_intern_register"/>
+        <field name="state">code</field>
+        <field name="code">model.send_intern_reminders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+
+    <record id="ir_cron_intern_birthday_reminder" model="ir.cron">
+        <field name="name">Intern Birthday Notification</field>
+        <field name="model_id" ref="codetrade_module.model_intern_register"/>
+        <field name="state">code</field>
+        <field name="code">model.display_birthday_notification()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+</odoo>

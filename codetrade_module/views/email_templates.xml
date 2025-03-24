@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="email_template_intern_registration" model="mail.template">
+        <field name="name">Intern Registration Email</field>
+        <field name="model_id" ref="model_intern_register"/>
+        <field name="email_from">{{ 'pankajjangi1034@gmail.com' }}</field>
+        <field name="email_to">{{ object.intern_email }}</field>
+        <field name="subject">Welcome to the Team</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <strong><t t-out="object.intern_name"/></strong>,</p>
+                <p>Welcome to our company! We are excited to have you on board.</p>
+                <p>Here are your details:</p>
+                <ul>
+                    <li><strong>Email:</strong> <t t-out="object.intern_email"/></li>
+                    <li><strong>Tech-Stack:</strong> <t t-out="object.intern_tech_stack"/></li>
+                    <li><strong>Mentor:</strong> <t t-out="object.select_employee_id.name"/></li>
+                </ul>
+                <p>Best Regards,<br/>Company HR Team</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="email_template_hr_reminder" model="mail.template">
+        <field name="name">Intern Reminder for HR</field>
+        <field name="model_id" ref="model_intern_register"/>
+        <field name="email_from">{{ 'pankajjangi1034@gmail.com' }}</field>
+        <field name="email_to">{{ object.select_hr_id.email }}</field>
+        <field name="subject">Reminder: Interns Assigned to You</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear <strong><t t-out="object.select_hr_id.name"/></strong>,</p>
+                <p>This is a reminder that the following intern is assigned to you:</p>
+                <ul>
+                    <li><strong>Name:</strong> <t t-out="object.intern_name"/></li>
+                    <li><strong>Email:</strong> <t t-out="object.intern_email"/></li>
+                    <li><strong>Tech:</strong> <t t-out="object.intern_tech_stack"/></li>
+                </ul>
+                <p>Please ensure that they have all the necessary resources to start their internship smoothly.</p>
+                <p>Best Regards,<br/>Company HR Team</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="email_template_sale_quotation" model="mail.template">
+        <field name="name">Sale Quotation Email</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="email_from">{{ 'pankajjangi1034@gmail.com' }}</field>
+        <field name="email_to">{{ 'pankajjangir3524@gmail.com' }}</field>
+        <field name="subject">Sale Quotation Created successfully</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <strong><t t-out="object.partner_id.name"/></strong>,</p>
+                <p>Your sale quotation have been successfully created.</p>
+                <p>Thanks and feel free to reach us</p>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="company_module_management">
+             <field name="name">Company Management Rights</field>
+             <field name="description">Security Rules for Company Management</field>
+             <field name="sequence">10</field>
+        </record>
+        
+        <!-- Intern Group -->
+        <record id="company_intern_access" model="res.groups">
+            <field name="name">Intern</field>
+            <field name="category_id" ref="company_module_management"/>
+        </record>
+        
+        <!-- Employee Group -->
+        <record id="company_employee_access" model="res.groups">
+            <field name="name">Employee</field>
+            <field name="category_id" ref="company_module_management"/>
+        </record>
+
+        <!-- HR Group -->
+        <record id="company_hr_access" model="res.groups">
+            <field name="name">HR</field>
+            <field name="category_id" ref="company_module_management"/>
+        </record>
+
+        <record id="company_admin_access" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="company_module_management"/>
+        </record>
+    </data>
+</odoo>

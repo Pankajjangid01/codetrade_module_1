@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hr_button_form" model="ir.ui.view">
+        <field name="name">hr.button.form</field>
+        <field name="model">company.hr</field>
+        <field name="inherit_id" ref="codetrade_module.company_hr_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">button_in_form</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="employee_button_form" model="ir.ui.view">
+        <field name="name">employee.button.form</field>
+        <field name="model">company.employee</field>
+        <field name="inherit_id" ref="codetrade_module.company_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">button_in_employee_form</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_quotation_button_form" model="ir.ui.view">
+        <field name="name">sale.quotation.button.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">button_in_sale_quotation_form</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

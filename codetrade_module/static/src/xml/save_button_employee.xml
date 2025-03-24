@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="save_button_test" t-inherit="web.FormView">
+        <xpath expr="//t[@t-set-slot='layout-buttons']" position="inside">
+           <button type="button" class="btn btn-primary"
+               t-on-click="onSaveButton">
+               <span>Save</span>
+           </button>
+       </xpath>
+   </t>
+</templates>

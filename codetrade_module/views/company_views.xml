@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Employee Form View -->
+    <record id="company_employee_form" model="ir.ui.view">
+        <field name="name">company.employee.form</field>
+        <field name="model">company.employee</field>
+        <field name="arch" type="xml">
+            <form string="Employee Form">
+                <sheet>
+                    <field name="image" string="Employee Image" widget="image" class="oe_avatar" options="{'size': [150, 150]}"/>
+                    <h1>
+                        <field name="name" placeholder="Enter Name" string="Employee Name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="email"/>
+                            <field name="contact"/>
+                        </group>
+                        <group>
+                            <field name="tech_stack"/>
+                            <field name="joining_date"/>
+                            <field name="salary"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Address">
+                            <sheet>
+                                <group>
+                                    <field name="address"/>
+                                </group>
+                            </sheet>
+                        </page>
+                        <page string="Interns">
+                            <sheet>
+                                <group>
+                                    <field name="intern_name_ids" widget="many2many_tags"/>
+                                </group>
+                            </sheet>
+                        </page>
+                    </notebook>
+                <sheet>
+                    <div style="width:500px; margin-left:20px; margin-top:10px; bg-color:#f8f9fa;">
+                        <group>
+                            <field name="created_by" readonly='True'/>
+                            <field name="created_at" readonly='True'/>
+                        </group>
+                    </div>
+                </sheet>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="employee_button_form" model="ir.ui.view">
+        <field name="name">employee.button.form</field>
+        <field name="model">company.employee</field>
+        <field name="inherit_id" ref="codetrade_module.company_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">js_class</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Employee List View -->
+    <record id="company_employee_list" model="ir.ui.view">
+        <field name="name">company.employee.list</field>
+        <field name="model">company.employee</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="contact"/>
+                <field name="employee_id"/>
+                <field name="salary"/>
+                <field name="tech_stack"/>
+                <field name="joining_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Employeee Kanban View -->
+    <record id="company_employee_kanban" model="ir.ui.view">
+        <field name="name">company.employee.kanban</field>
+        <field name="model">company.employee</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div style="position: relative; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-height: 120px;background-color:rgb(227, 228, 160);">
+                            <div style="position: absolute; top: 10px; right: 10px;">
+                                <field name="image" widget="image" class="oe_avatar" options="{'size': [100, 100]}"/>
+                            </div>
+                            <div style="margin-right: 120px;">
+                                <div><strong>Name:</strong> <field name="name"/></div>
+                                <div><strong>Contact:</strong> <field name="contact"/></div>
+                                <div><strong>Email:</strong> <field name="email"/></div>
+                                <div><strong>Technology:</strong> <field name="tech_stack"/></div>
+                                <div><strong>Joining Date:</strong> <field name="joining_date"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- HR Form View -->
+    <record id="company_hr_form" model="ir.ui.view">
+        <field name="name">company.hr.form</field>
+        <field name="model">company.hr</field>
+        <field name="arch" type="xml">
+            <form string="HR Form">
+                <header>
+                    <button name="action_open_hr_wizard" type="object" string="Assign Office" class="oe_highlight"/>
+                    <button name="action_open_intern_wizard" type="object" string="Add Interns" class="oe_highlight"/>
+                    <!-- <button name="get_sorted_hr_list" type="object" string="Sort HR" class="oe_highlight"/> -->
+                </header>
+                <sheet>
+                    <field name="image" string="HR Image" widget="image" class="oe_avatar" options="{'size': [150, 150]}"/>
+                    <h1>
+                        <field name="name" placeholder="Enter Name" string="Employee Name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="email"/>
+                            <field name="contact"/>
+                        </group>
+                        <group>
+                            <field name="salary"/>
+                            <field name="hr_post"/>
+                            <field name="joining_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Address">
+                            <sheet>
+                                <group>
+                                    <field name="address"/>
+                                </group>
+                            </sheet>
+                        </page>
+                        <page string="Interns">
+                            <sheet>
+                                <group>
+                                    <field name="intern_ids_m2m" widget="many2many_tags"/> 
+                                    <!-- <button name="get_hr_with_multiple_interns" type="object" string="Filter HR's" class="oe_highlight"/> -->
+                                </group>
+                            </sheet>
+                        </page>
+                    </notebook>
+                </sheet>
+                <sheet>
+                    <div style="width:500px; margin-left:20px; margin-top:10px; bg-color:#f8f9fa;">
+                        <group>
+                            <field name="created_by" readonly='True'/>
+                            <field name="created_at" readonly='True'/>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- HR List View -->
+    <record id="company_hr_list" model="ir.ui.view">
+        <field name="name">company.hr.list</field>
+        <field name="model">company.hr</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="contact"/>
+                <field name="hr_post"/>
+                <field name="salary"/>
+                <field name="joining_date"/>
+                <field name="hr_office"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Employeee Kanban View -->
+    <record id="company_hr_kanban" model="ir.ui.view">
+        <field name="name">company.hr.kanban</field>
+        <field name="model">company.hr</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div style="position: relative; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-height: 120px;background-color:rgb(227, 228, 160);">
+                            <div style="position: absolute; top: 10px; right: 10px;">
+                                <field name="image" widget="image" class="oe_avatar" options="{'size': [100, 100]}"/>
+                            </div>
+                            <div style="margin-right: 120px;">
+                                <div><strong>Name:</strong> <field name="name"/></div>
+                                <div><strong>Contact:</strong> <field name="contact"/></div>
+                                <div><strong>Email:</strong> <field name="email"/></div>
+                                <div><strong>Post:</strong> <field name="hr_post"/></div>
+                                <div><strong>Joining Date:</strong> <field name="joining_date"/></div>
+                                <div><strong>Assigned Office:</strong> <field name="hr_office"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--HR Actions -->
+    <record id="hr_data_actions" model="ir.actions.act_window">
+        <field name="name">HR Data</field>
+        <field name="res_model">company.hr</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <!--Employee Actions -->
+    <record id="employee_data_actions" model="ir.actions.act_window">
+        <field name="name">Employee's</field>
+        <field name="res_model">company.employee</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+</odoo>

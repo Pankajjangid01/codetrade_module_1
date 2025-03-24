@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="birthday_email_template" model="mail.template">
+        <field name="name">Birthday Email</field>
+        <field name="model_id" ref="model_intern_register"/>
+        <field name="email_from">{{ (user.email) }}</field>
+        <field name="email_to">{{ object.intern_email }}</field>
+        <field name="subject">Birthday Wishes</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <strong><t t-out="object.intern_name"/></strong>,</p>
+                <p>"Happy Birthday!", "Wishing you a wonderful day filled with joy", "May all your wishes come true", "Cheers to another year!", "Sending you lots of love on your special day", "Have a fantastic birthday!", "You're amazing!", "Here's to many more happy years ahead!</p>
+                <p>Best Regards,<br/>Company HR Team</p>
+            </div>
+        </field>
+    </record>    
+</odoo>
