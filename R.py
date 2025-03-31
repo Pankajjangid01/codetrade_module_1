@@ -1,69 +1,45 @@
-from odoo import models, fields, api
-import razorpay
-import logging
+from odoo import models,fields,api
+from odoo.exceptions import ValidationError
 
-_logger = logging.getLogger(__name__)
+class PatientAssessment(models.TransientModel):
+    
+    _name = "patient.assessment"
+    _inherit = "gov.code.source"
 
-class RazorpayPayment(models.Model):
-    _name = 'razorpay.payment'
-    _description = 'Razorpay Payment'
+    gov_code_source_id = fields.Many2one(
+        'gov.code.source', string='Source ID')
+    govt_code = fields.Char(string="Government Identity",size=14)
+    
+    @api.constrains("govt_code")
+    def check_govt_code(self):
+        """Method to validate the govt. code"""
+        for record in self:
+            if not record.govt_code.isdigit():
+                raise ValidationError("Enter Valid Govt ID")
 
-    name = fields.Char(string='Order ID')
-    amount = fields.Float(string='Amount')
-    currency = fields.Char(default='INR')
+            if len(record.govt_code) < 10 or len(record.govt_code) > 14:
+                raise ValidationError("Enter Valid Govt ID bwtween 10 to 14")
+    
+    def apply(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Assessments',
+            'res_model': 'assessments.assessments',
+            'view_mode': 'list',
+            'target': 'new',
+            'context': {'default_govt_code':self.govt_code},
+        }
+
+class Assessmets(models.TransientModel):
+    _name = "assessments.assessments"
+
+    patient_name = fields.Char(string="Patient Name", readonly=True)
+    patient_age = fields.Char(string="Age",readonly=True)
+    patient_code = fields.Char(string="Code",readonly=True)
+    patient_doctor = fields.Char(string="Doctor",readonly=True)
 
     @api.model
-    def create_razorpay_order(self, amount):
-        client = razorpay.Client(auth=("RAZORPAY_API_KEY", "RAZORPAY_API_SECRET"))
-
-        data = {
-            "amount": int(amount * 100),  # Razorpay expects paise
-            "currency": "INR",
-            "receipt": "order_rcptid_11",
-            "payment_capture": 1
-        }
-        order = client.order.create(data=data)
-        _logger.info("Razorpay Order Created: %s", order)
-
-        # Save order ID in Odoo
-        record = self.create({
-            'name': order.get('id'),
-            'amount': amount
-        })
-        return order
-
-  <record id="view_razorpay_payment_form" model="ir.ui.view">
-    <field name="name">razorpay.payment.form</field>
-    <field name="model">razorpay.payment</field>
-    <field name="arch" type="xml">
-        <form string="Razorpay Payment">
-            <sheet>
-                <group>
-                    <field name="name"/>
-                    <field name="amount"/>
-                    <field name="currency"/>
-                </group>
-                <footer>
-                    <button name="action_create_order"
-                            type="object"
-                            string="Pay with Razorpay"
-                            class="btn-primary"/>
-                </footer>
-            </sheet>
-        </form>
-    </field>
-</record>
-
-
-def action_create_order(self):
-        self.ensure_one()
-        order = self.create_razorpay_order(self.amount)
-        # You can redirect user to Razorpay checkout here or open in JS popup
-        return {
-            'type': 'ir.actions.act_url',
-            'url': f"https://checkout.razorpay.com/v1/checkout.js?order_id={order['id']}",
-            'target': 'new',
-        }
-
-
-        
+    def default_get(self, fields):
+        import pdb;pdb.set_trace()
+        res = super(Assessmets, self).default_get(fields)
+# in my hms.appointment i have gov_id of patient so the gov_code i  sending in context on this basis i want get the pateint info and its appointment
