@@ -1,54 +1,31 @@
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
 
-class PatientAssessment(models.TransientModel):
-    _name = "patient.assessment"
-    _inherit = "gov.code.source"
+class PatientIDWizard(models.TransientModel):
+    _name = 'patient.id.wizard'
+    _description = 'Wizard to Enter Government ID'
 
-    gov_code_source_id = fields.Many2one('gov.code.source', string='Source ID')
-    govt_code = fields.Char(string="Government Identity", size=14)
-    
-    @api.constrains("govt_code")
-    def check_govt_code(self):
-        for record in self:
-            if not record.govt_code.isdigit():
-                raise ValidationError("Enter Valid Govt ID")
-            if len(record.govt_code) < 10 or len(record.govt_code) > 14:
-                raise ValidationError("Enter Valid Govt ID between 10 to 14")
-    
-    def apply(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Assessments',
-            'res_model': 'assessments.assessments',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {'default_govt_code': self.govt_code},
-        }
+    govt_id = fields.Char(string="Government ID", required=True)
 
-class Assessmets(models.TransientModel):
-    _name = "assessments.assessments"
+    def action_fetch_patient(self):
+        patient = self.env['patient.details'].search([('govt_id', '=', self.govt_id)], limit=1)
+        if patient:
+            return {
+                'type': 'ir.actions.act_window',
+                'name': 'Patient Details Wizard',
+                'res_model': 'patient.details.wizard',
+                'view_mode': 'form',
+                'target': 'new',
+                'context': {'default_patient_id': patient.id}
+            }
+        else:
+            return {'type': 'ir.actions.act_window_close'}
 
-    patient_name = fields.Char(string="Patient Name", readonly=True)
-    patient_age = fields.Char(string="Age", readonly=True)
-    patient_code = fields.Char(string="Code", readonly=True)
-    patient_doctor = fields.Char(string="Doctor", readonly=True)
 
-    @api.model
-    def default_get(self, fields):
-        res = super(Assessmets, self).default_get(fields)
-        govt_code = self.env.context.get('default_govt_code')
-        
-        if govt_code:
-            patient = self.env['hms.patient'].search([('gov_id', '=', govt_code)], limit=1)
-            if patient:
-                res.update({
-                    'patient_name': patient.name,
-                    'patient_age': patient.age,
-                    'patient_code': patient.code,
-                    'patient_doctor': patient.doctor_id.name,
-                })
-            else:
-                raise ValidationError("No patient found for the provided Government ID.")
-        
-        return res
+class PatientDetailsWizard(models.TransientModel):
+    _name = 'patient.details.wizard'
+    _description = 'Wizard to Display Patient Details'
+
+    patient_id = fields.Many2one('patient.details', string="Patient", required=True, readonly=True)
+    name = fields.Char(related='patient_id.name', string="Patient Name", readonly=True)
+    age = fields.Integer(related='patient_id.age', string="Age", readonly=True)
+    assessment_line_ids = fields.One2many('patient.assessment.line', 'patient_id', string="Assessment Lines", readonly=True)
