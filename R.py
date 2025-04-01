@@ -1,4 +1,47 @@
-from odoo import models,fields,api
+class Patient(models.Model):
+    _name = 'hms.patient'
+    
+    name = fields.Char(string="Patient Name", required=True)
+    age = fields.Char(string="Age")
+    gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string="Gender")
+    gov_code = fields.Char(string="Gov Code")
+    gov_code_source_id = fields.Many2one('gov.code.source', string='Gov Code Source')
+    appointment_ids = fields.One2many('hms.appointment', 'patient_id', string="Appointments")class PatientDetailsWizard(models.TransientModel):
+    _name = 'patient.details.wizard'
+    _description = 'Wizard to Display Patient Details'
+
+    patient_id = fields.Many2one('hms.patient', string="Patient", required=True, readonly=True)
+    age_of_patient = fields.Char(related='patient_id.age', string="Age", readonly=True)
+    patient_gender = fields.Selection(related='patient_id.gender', string="Gender", readonly=True)
+    assessment_line_ids = fields.One2many('hms.appointment', 'patient_id', string="Assessment Lines", readonly=True)<odoo>
+    <data>
+        <record id="patient_details_wizard_form" model="ir.ui.view">
+            <field name="name">patient.details.wizard.form</field>
+            <field name="model">patient.details.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="age_of_patient"/>
+                            <field name="patient_gender"/>
+                        </group>
+                        <group>
+                            <field name="assessment_line_ids" readonly="1">
+                                <tree>
+                                    <field name="treatment_id"/>
+                                    <field name="appointment_date"/>
+                                    <field name="doctor_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>from odoo import models,fields,api
 from odoo.exceptions import ValidationError
 
 class PatientAssessment(models.TransientModel):
