@@ -1,3 +1,20 @@
+<templates>
+    <t t-name="custom_timer_widget">
+        <div class="stopwatch">
+            <div>
+                <input type="number" name="hours" placeholder="HH" t-on-input="onInputChange"/>
+                <input type="number" name="minutes" placeholder="MM" t-on-input="onInputChange"/>
+                <input type="number" name="seconds" placeholder="SS" t-on-input="onInputChange"/>
+                <button t-on-click="setTimer">Set Timer</button>
+            </div>
+            <div id="display">00h : 00m : 00s</div>
+            <button t-on-click="startTimer">Start</button>
+            <button t-on-click="stopTimer">Stop</button>
+            <button t-on-click="resetTimer">Reset</button>
+        </div>
+    </t>
+</templates>
+
 import { Component, useState, xml } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 
@@ -10,11 +27,15 @@ class TimerWidget extends Component {
             timeLeft: 0,
             intervalId: null,
             isRunning: false,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
         });
     }
 
     startTimer() {
-        if (this.state.isRunning) return; // Prevent starting multiple intervals
+        if (this.state.isRunning || this.state.timeLeft <= 0) return;
+
         this.state.isRunning = true;
 
         const intervalId = setInterval(() => {
@@ -43,24 +64,26 @@ class TimerWidget extends Component {
     }
 
     updateDisplay() {
-        const days = Math.floor(this.state.timeLeft / (60 * 60 * 24));
-        const hours = Math.floor((this.state.timeLeft % (60 * 60 * 24)) / (60 * 60));
-        const minutes = Math.floor((this.state.timeLeft % (60 * 60)) / 60);
-        const seconds = Math.floor(this.state.timeLeft % 60);
+        const hours = Math.floor(this.state.timeLeft / 3600);
+        const minutes = Math.floor((this.state.timeLeft % 3600) / 60);
+        const seconds = this.state.timeLeft % 60;
 
         document.getElementById("display").innerText = 
-            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            `${hours.toString().padStart(2, '0')}h : ${minutes.toString().padStart(2, '0')}m : ${seconds.toString().padStart(2, '0')}s`;
     }
 
     setTimer() {
-        // Example: Set timer for 1 day, 1 hour, 1 minute, and 10 seconds
-        const totalSeconds = (1 * 24 * 60 * 60) + (1 * 60 * 60) + (1 * 60) + 10;
-        this.state.timeLeft = totalSeconds;
+        const hours = parseInt(this.state.hours) || 0;
+        const minutes = parseInt(this.state.minutes) || 0;
+        const seconds = parseInt(this.state.seconds) || 0;
+
+        this.state.timeLeft = (hours * 3600) + (minutes * 60) + seconds;
         this.updateDisplay();
     }
 
-    mounted() {
-        this.setTimer();
+    onInputChange(event) {
+        const { name, value } = event.target;
+        this.state[name] = value;
     }
 }
 
@@ -69,14 +92,4 @@ export const timer_id = {
     supportedType: ["char"]
 }
 
-registry.category("fields").add("custom_timer_widget", timer_id);8
-<templates>
-    <t t-name="custom_timer_widget">
-        <div class="stopwatch">
-            <div id="display">Loading...</div>
-            <button id="startBtn" t-on-click="startTimer">Start</button>
-            <button id="stopBtn" t-on-click="stopTimer">Stop</button>
-            <button id="resetBtn" t-on-click="resetTimer">Reset</button>
-        </div>
-    </t>
-</templates>
+registry.category("fields").add("custom_timer_widget", timer_id);
