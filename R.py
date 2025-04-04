@@ -1,20 +1,11 @@
-/** static/src/js/timer_widget.js **/
-
-import { Component, useState, onWillUnmount, onMounted } from "@odoo/owl";
-import fieldRegistry from "@web/fields/field_registry";
+import { Component, useState} from "@odoo/owl";
+import { registry } from "@web/core/registry";
 
 export class TimerWidget extends Component {
+    static template = "timer_widget";
     setup() {
         this.state = useState({ seconds: 0, isRunning: false });
         this.interval = null;
-
-        onMounted(() => {
-            if (this.state.isRunning) {
-                this.startTimer();
-            }
-        });
-
-        onWillUnmount(this.stopTimer.bind(this));
     }
 
     startTimer() {
@@ -35,22 +26,16 @@ export class TimerWidget extends Component {
     }
 
     get formattedTime() {
+        const hours = Math.floor(this.state.seconds / 3600)
         const minutes = Math.floor(this.state.seconds / 60);
         const seconds = this.state.seconds % 60;
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        return `${hours}${hours}:${minutes < 10 ? '0':''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
 }
 
-TimerWidget.template = `
-    <div>
-        <div style="font-size: 20px; margin-bottom: 10px;">
-            Time: <span><t t-esc="this.formattedTime"/></span>
-        </div>
-        <div>
-            <button t-on-click="startTimer" t-if="!this.state.isRunning" class="btn btn-primary">Start</button>
-            <button t-on-click="stopTimer" t-if="this.state.isRunning" class="btn btn-secondary">Stop</button>
-        </div>
-    </div>
-`;
+export const custom_timer = {
+    component: TimerWidget,
+    supportedType : ["char"]
+}
 
-fieldRegistry.add("timer_widget", TimerWidget);
+registry.category("fields").add("timer_widget",custom_timer);
