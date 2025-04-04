@@ -39,3 +39,19 @@ export const custom_timer = {
 }
 
 registry.category("fields").add("timer_widget",custom_timer);
+
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="timer_widget">
+        <div class="d-flex">
+            <input id="display" type="text" t-model="props.record.data[props.name]" style="border:none;input[type=text]:focus{border: none;};width:30%"/>
+            <div style="font-size: 20px; margin-bottom: 10px;">
+                <span><t t-esc="this.formattedTime"/></span>
+            </div>
+            <div>
+                <button t-on-click="startTimer" t-if="!this.state.isRunning" class="btn btn-primary">Start</button>
+                <button t-on-click="stopTimer" t-if="this.state.isRunning" class="btn btn-secondary">Stop</button>
+            </div>
+        </div>
+    </t>
+</templates>
