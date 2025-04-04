@@ -10,16 +10,17 @@ class TimerWidget extends Component {
         const recordId = this.props.record.resId;
 
         if (globalTimers.has(recordId)) {
-            this.state = globalTimers.get(recordId);
+            const savedState = globalTimers.get(recordId);
+            this.state = savedState.state;
+
+            // Agar interval already chal raha hai toh usko dobara start karna
+            if (savedState.interval) {
+                this.interval = savedState.interval;
+                this.startTimer(true); // true se indicate karenge ki naye interval ko create na kare
+            }
         } else {
             this.state = useState({ seconds: 0, isRunning: false });
-            globalTimers.set(recordId, this.state);
-        }
-
-        this.interval = null;
-
-        if (this.state.isRunning) {
-            this.startTimer();
+            globalTimers.set(recordId, { state: this.state, interval: null });
         }
 
         onWillUpdateProps(() => {
@@ -27,16 +28,21 @@ class TimerWidget extends Component {
         });
 
         onWillUnmount(() => {
-            this.stopTimer(); 
+            globalTimers.set(recordId, { state: this.state, interval: this.interval }); // Interval ko bhi save karte hain
         });
     }
 
-    startTimer() {
-        if (!this.state.isRunning) {
+    startTimer(restore = false) {
+        if (!this.state.isRunning || restore) {
             this.state.isRunning = true;
-            this.interval = setInterval(() => {
-                this.state.seconds++;
-            }, 1000);
+            
+            if (!restore) { // Agar naye se start ho raha hai tabhi naye interval set kare
+                this.interval = setInterval(() => {
+                    this.state.seconds++;
+                }, 1000);
+
+                globalTimers.get(this.props.record.resId).interval = this.interval; // Interval ko save karte hain
+            }
         }
     }
 
@@ -52,6 +58,7 @@ class TimerWidget extends Component {
         this.stopTimer();
         this.state.seconds = 0;
         this.state.isRunning = false;
+        globalTimers.get(this.props.record.resId).interval = null; // Interval reset
     }
 
     get formattedTime() {
@@ -68,19 +75,3 @@ export const custom_timer = {
 }
 
 registry.category("fields").add("timer_widget", custom_timer);
-// <?xml version="1.0" encoding="UTF-8"?>
-// <templates xml:space="preserve">
-//     <t t-name="timer_widget">
-//         <div class="d-flex">
-//             <input id="display" type="text" t-model="props.record.data[props.name]" style="border:none;input[type=text]:focus{border: none;};width:30%"/>
-//             <div style="font-size: 20px; margin-bottom: 10px;">
-//                 <span><t t-esc="this.formattedTime"/></span>
-//             </div>
-//             <div>
-//                 <button t-on-click="startTimer" t-if="!this.state.isRunning" class="btn btn-primary">Start</button>
-//                 <button t-on-click="stopTimer" t-if="this.state.isRunning" class="btn btn-secondary">Stop</button>
-//             </div>
-//         </div>
-//     </t>
-// </templates>
-// abhi mai from view se list mai jaa rha hu toh time ruk jata hai but mujhe time nhi rokna uss record ka vo chalta rhna chachiye or hab wapas uss record ka form kholu toh ui bhi update hona chachiye jese initially hota hai 
