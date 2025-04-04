@@ -1,95 +1,56 @@
-<templates>
-    <t t-name="custom_timer_widget">
-        <div class="stopwatch">
-            <div>
-                <input type="number" name="hours" placeholder="HH" t-on-input="onInputChange"/>
-                <input type="number" name="minutes" placeholder="MM" t-on-input="onInputChange"/>
-                <input type="number" name="seconds" placeholder="SS" t-on-input="onInputChange"/>
-                <button t-on-click="setTimer">Set Timer</button>
-            </div>
-            <div id="display">00h : 00m : 00s</div>
-            <button t-on-click="startTimer">Start</button>
-            <button t-on-click="stopTimer">Stop</button>
-            <button t-on-click="resetTimer">Reset</button>
-        </div>
-    </t>
-</templates>
+/** static/src/js/timer_widget.js **/
 
-import { Component, useState, xml } from "@odoo/owl";
-import { registry } from "@web/core/registry";
+import { Component, useState, onWillUnmount, onMounted } from "@odoo/owl";
+import fieldRegistry from "@web/fields/field_registry";
 
-class TimerWidget extends Component {
-    static template = "custom_timer_widget";
-    
-    constructor() {
-        super(...arguments);
-        this.state = useState({
-            timeLeft: 0,
-            intervalId: null,
-            isRunning: false,
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
+export class TimerWidget extends Component {
+    setup() {
+        this.state = useState({ seconds: 0, isRunning: false });
+        this.interval = null;
+
+        onMounted(() => {
+            if (this.state.isRunning) {
+                this.startTimer();
+            }
         });
+
+        onWillUnmount(this.stopTimer.bind(this));
     }
 
     startTimer() {
-        if (this.state.isRunning || this.state.timeLeft <= 0) return;
-
-        this.state.isRunning = true;
-
-        const intervalId = setInterval(() => {
-            if (this.state.timeLeft <= 0) {
-                clearInterval(this.state.intervalId);
-                this.state.isRunning = false;
-                document.getElementById("display").innerText = "EXPIRED";
-            } else {
-                this.state.timeLeft -= 1;
-                this.updateDisplay();
-            }
-        }, 1000);
-
-        this.state.intervalId = intervalId;
+        if (!this.state.isRunning) {
+            this.state.isRunning = true;
+            this.interval = setInterval(() => {
+                this.state.seconds++;
+            }, 1000);
+        }
     }
 
     stopTimer() {
-        clearInterval(this.state.intervalId);
-        this.state.isRunning = false;
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = null;
+            this.state.isRunning = false;
+        }
     }
 
-    resetTimer() {
-        this.stopTimer();
-        this.state.timeLeft = 0;
-        this.updateDisplay();
-    }
-
-    updateDisplay() {
-        const hours = Math.floor(this.state.timeLeft / 3600);
-        const minutes = Math.floor((this.state.timeLeft % 3600) / 60);
-        const seconds = this.state.timeLeft % 60;
-
-        document.getElementById("display").innerText = 
-            `${hours.toString().padStart(2, '0')}h : ${minutes.toString().padStart(2, '0')}m : ${seconds.toString().padStart(2, '0')}s`;
-    }
-
-    setTimer() {
-        const hours = parseInt(this.state.hours) || 0;
-        const minutes = parseInt(this.state.minutes) || 0;
-        const seconds = parseInt(this.state.seconds) || 0;
-
-        this.state.timeLeft = (hours * 3600) + (minutes * 60) + seconds;
-        this.updateDisplay();
-    }
-
-    onInputChange(event) {
-        const { name, value } = event.target;
-        this.state[name] = value;
+    get formattedTime() {
+        const minutes = Math.floor(this.state.seconds / 60);
+        const seconds = this.state.seconds % 60;
+        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
 }
 
-export const timer_id = {
-    component: TimerWidget,
-    supportedType: ["char"]
-}
+TimerWidget.template = `
+    <div>
+        <div style="font-size: 20px; margin-bottom: 10px;">
+            Time: <span><t t-esc="this.formattedTime"/></span>
+        </div>
+        <div>
+            <button t-on-click="startTimer" t-if="!this.state.isRunning" class="btn btn-primary">Start</button>
+            <button t-on-click="stopTimer" t-if="this.state.isRunning" class="btn btn-secondary">Stop</button>
+        </div>
+    </div>
+`;
 
-registry.category("fields").add("custom_timer_widget", timer_id);
+fieldRegistry.add("timer_widget", TimerWidget);
