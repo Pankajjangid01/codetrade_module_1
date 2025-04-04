@@ -1,4 +1,4 @@
-import { Component, useState, onWillUpdateProps, onWillUnmount } from "@odoo/owl";
+import { Component, useState, onWillUpdateProps, onWillUnmount, onMounted } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 
 const globalTimers = new Map();
@@ -11,12 +11,11 @@ class TimerWidget extends Component {
 
         if (globalTimers.has(recordId)) {
             const savedState = globalTimers.get(recordId);
-            this.state = savedState.state;
+            this.state = useState(savedState.state);
 
-            
             if (savedState.interval) {
                 this.interval = savedState.interval;
-                this.startTimer(); 
+                this.startTimer(true); // Continue the timer if it was already running
             }
         } else {
             this.state = useState({ seconds: 0, isRunning: false });
@@ -29,15 +28,19 @@ class TimerWidget extends Component {
 
         onWillUnmount(() => {  
             globalTimers.set(recordId, { state: this.state, interval: this.interval });
+            if (this.interval) clearInterval(this.interval); // Clear interval to avoid memory leak
         });
     }
 
-    startTimer() {
-        if (!this.state.isRunning) {
-            this.state.isRunning = true;          
+    startTimer(resume = false) {
+        if (!this.state.isRunning || resume) {
+            this.state.isRunning = true;
             this.interval = setInterval(() => {
                 this.state.seconds++;
+                this.render(); // Force re-render to update UI
             }, 1000);
+
+            globalTimers.set(this.props.record.resId, { state: this.state, interval: this.interval });
         }
     }
 
@@ -47,6 +50,7 @@ class TimerWidget extends Component {
             this.interval = null;
         }
         this.state.isRunning = false;
+        this.render(); // Force re-render to update UI
     }
 
     resetTimer() {
@@ -54,6 +58,7 @@ class TimerWidget extends Component {
         this.state.seconds = 0;
         this.state.isRunning = false;
         globalTimers.get(this.props.record.resId).interval = null;
+        this.render(); // Ensure UI is updated
     }
 
     get formattedTime() {
@@ -70,22 +75,3 @@ export const custom_timer = {
 }
 
 registry.category("fields").add("timer_widget", custom_timer);
-<?xml version="1.0" encoding="UTF-8"?>
-<templates xml:space="preserve">
-    <t t-name="timer_widget">
-        <div class="d-flex">
-            <input id="display" type="text" t-model="props.record.data[props.name]" style="border:none;input[type=text]:focus{border: none;};width:30%"/>
-            <div style="font-size: 20px; margin-bottom: 10px;">
-                <span><t t-esc="this.formattedTime"/></span>
-            </div>
-            <div>
-                <button t-on-click="startTimer" t-if="!this.state.isRunning" class="btn btn-primary">Start</button>
-                <button t-on-click="stopTimer" t-if="this.state.isRunning" class="btn btn-secondary">Stop</button>
-            </div>
-        </div>
-    </t>
-</templates>
-
-
-// in this code initiallly when i open any record and start the timer start button changes to stop and timer start but when i go back to list view and then com back to that record form
-// then the timer is not running on ui but in backend it is running means ui not updating and when i click the stop button it change to start but not update on ui means my form ui not updating 
